@@ -49,7 +49,7 @@ public class ResultUtil<T> {
     public Result<T> setErrorMsg(String msg) {
         this.result.setSuccess(false);
         this.result.setMessage(msg);
-        this.result.setCode(ErrorCode.UNKNOW);
+        this.result.setCode(ErrorCode.ERROR);
         return this.result;
     }
 

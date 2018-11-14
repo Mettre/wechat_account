@@ -14,11 +14,10 @@
         <result column="background_wall" jdbcType="VARCHAR" property="backgroundWall"/>
         <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="visitor_num" jdbcType="INTEGER" property="visitorNum"/>
     </resultMap>
     <sql id="Base_Column_List">
     user_id, user_name, signature, gender, head_avatar, password, phone, city, age, background_wall, 
-    creation_time, update_time, visitor_num
+    creation_time, update_time
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -34,12 +33,12 @@
     insert into wc_user (user_id, user_name, signature, 
       gender, head_avatar, password, 
       phone, city, age, background_wall, 
-      creation_time, update_time, visitor_num
+      creation_time, update_time
       )
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
       #{gender,jdbcType=VARCHAR}, #{headAvatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{backgroundWall,jdbcType=VARCHAR}, 
-      #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{visitorNum,jdbcType=INTEGER}
+      #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.mettre.account.pojo.User">
@@ -81,9 +80,6 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="visitorNum != null">
-                visitor_num,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -121,9 +117,6 @@
             </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="visitorNum != null">
-                #{visitorNum,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -163,9 +156,6 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="visitorNum != null">
-                visitor_num = #{visitorNum,jdbcType=INTEGER},
-            </if>
         </set>
         where user_id = #{userId,jdbcType=VARCHAR}
     </update>
@@ -182,7 +172,6 @@
       background_wall = #{backgroundWall,jdbcType=VARCHAR},
       creation_time = #{creationTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      visitor_num = #{visitorNum,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

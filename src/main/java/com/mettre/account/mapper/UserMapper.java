@@ -1,8 +1,11 @@
 package com.mettre.account.mapper;
 
 import com.mettre.account.pojo.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface UserMapper {
+
     int deleteByPrimaryKey(String userId);
 
     int insert(User record);

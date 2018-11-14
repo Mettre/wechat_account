@@ -1,18 +1,18 @@
 package com.mettre.account.service;
 
-import com.mettre.account.pojo.User;
+import com.mettre.account.pojoVM.UserVM;
 
 public interface UserService {
 
     int deleteByPrimaryKey(String userId);
 
-    int insert(User record);
+    int insert(UserVM record);
 
-    int insertSelective(User record);
+    int insertSelective(UserVM record);
 
-    User selectByPrimaryKey(String userId);
+    UserVM selectByPrimaryKey(String userId);
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(UserVM record);
 
-    int updateByPrimaryKey(User record);
+    int updateByPrimaryKey(UserVM record);
 }

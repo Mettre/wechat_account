@@ -3,6 +3,7 @@ package com.mettre.account.controller;
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
 import com.mettre.account.pojo.User;
+import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ApiOperation(value = "用户注册")
-    public Result<Object> insert(@Valid @RequestBody User user) {
+    public Result<Object> insert(@Valid @RequestBody UserVM user) {
         userService.insert(user);
         return new ResultUtil<Object>().setSuccess();
     }

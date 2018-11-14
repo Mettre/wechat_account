@@ -4,6 +4,7 @@ import com.mettre.account.enum_.ResultEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.mapper.UserMapper;
 import com.mettre.account.pojo.User;
+import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,31 +23,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insert(User record) {
-        User user = UserMapper.selectByPrimaryKey(record.getPhone());
-        if (user == null) {
+    public int insert(UserVM record) {
+        if (UserMapper.selectByPrimaryKey(record.getPhone()) != null) {
             throw new CustomerException(ResultEnum.GOODS_ID_NOT_EMPTY);
         }
-        return UserMapper.insert(record);
+        User user = new User(record);
+        return UserMapper.insert(user);
     }
 
     @Override
-    public int insertSelective(User record) {
+    public int insertSelective(UserVM record) {
         return 0;
     }
 
     @Override
-    public User selectByPrimaryKey(String userId) {
+    public UserVM selectByPrimaryKey(String userId) {
         return null;
     }
 
     @Override
-    public int updateByPrimaryKeySelective(User record) {
+    public int updateByPrimaryKeySelective(UserVM record) {
         return 0;
     }
 
     @Override
-    public int updateByPrimaryKey(User record) {
+    public int updateByPrimaryKey(UserVM record) {
         return 0;
     }
 }
