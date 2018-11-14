@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mettre.account.mapper.VisitorMapper" >
-  <resultMap id="BaseResultMap" type="com.mettre.account.pojo.Visitor" >
-    <id column="visitor_id" property="visitorId" jdbcType="VARCHAR" />
-    <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="visitors_uesr" property="visitorsUesr" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.mettre.account.mapper.VisitorMapper">
+    <resultMap id="BaseResultMap" type="com.mettre.account.pojo.Visitor">
+        <id column="visitor_id" property="visitorId" jdbcType="VARCHAR"/>
+        <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="visitors_uesr" property="visitorsUesr" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     visitor_id, creation_time, user_id, visitors_uesr
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from wc_visitor
-    where visitor_id = #{visitorId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from wc_visitor
+        where visitor_id = #{visitorId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from wc_visitor
     where visitor_id = #{visitorId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mettre.account.pojo.Visitor" >
+    <insert id="insert" parameterType="com.mettre.account.pojo.Visitor">
     insert into wc_visitor (visitor_id, creation_time, user_id, 
       visitors_uesr)
     values (#{visitorId,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
       #{visitorsUesr,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.mettre.account.pojo.Visitor" >
-    insert into wc_visitor
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="visitorId != null" >
-        visitor_id,
-      </if>
-      <if test="creationTime != null" >
-        creation_time,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="visitorsUesr != null" >
-        visitors_uesr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="visitorId != null" >
-        #{visitorId,jdbcType=VARCHAR},
-      </if>
-      <if test="creationTime != null" >
-        #{creationTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="visitorsUesr != null" >
-        #{visitorsUesr,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mettre.account.pojo.Visitor" >
-    update wc_visitor
-    <set >
-      <if test="creationTime != null" >
-        creation_time = #{creationTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="visitorsUesr != null" >
-        visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where visitor_id = #{visitorId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mettre.account.pojo.Visitor" >
+    <insert id="insertSelective" parameterType="com.mettre.account.pojo.Visitor">
+        insert into wc_visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="visitorId != null">
+                visitor_id,
+            </if>
+            <if test="creationTime != null">
+                creation_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="visitorsUesr != null">
+                visitors_uesr,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="visitorId != null">
+                #{visitorId,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null">
+                #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorsUesr != null">
+                #{visitorsUesr,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mettre.account.pojo.Visitor">
+        update wc_visitor
+        <set>
+            <if test="creationTime != null">
+                creation_time = #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorsUesr != null">
+                visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where visitor_id = #{visitorId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mettre.account.pojo.Visitor">
     update wc_visitor
     set creation_time = #{creationTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=VARCHAR},

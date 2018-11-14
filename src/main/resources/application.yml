@@ -64,3 +64,15 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+
+# Swagger界面内容配置
+swagger:
+  title: 微信
+  description: 微信接口文档
+  version: 1.0.0
+  termsOfServiceUrl: http://blog.exrick.cn
+  contact:
+    name: account
+    url: http://blog.exrick.cn
+    email: 1052461392@qq.com

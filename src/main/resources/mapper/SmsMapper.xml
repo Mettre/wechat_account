@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mettre.account.mapper.SmsMapper">
+    <resultMap id="BaseResultMap" type="com.mettre.account.pojo.Sms">
+        <id column="sms_id" jdbcType="BIGINT" property="smsId"/>
+        <result column="sms_type" jdbcType="VARCHAR" property="smsType"/>
+        <result column="sms_phone" jdbcType="VARCHAR" property="smsPhone"/>
+        <result column="sms_content" jdbcType="VARCHAR" property="smsContent"/>
+        <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sms_id, sms_type, sms_phone, sms_content, creation_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wc_sms
+        where sms_id = #{smsId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wc_sms
+    where sms_id = #{smsId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.mettre.account.pojo.Sms">
+    insert into wc_sms (sms_id, sms_type, sms_phone, 
+      sms_content, creation_time)
+    values (#{smsId,jdbcType=BIGINT}, #{smsType,jdbcType=VARCHAR}, #{smsPhone,jdbcType=VARCHAR}, 
+      #{smsContent,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.mettre.account.pojo.Sms">
+        insert into wc_sms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="smsId != null">
+                sms_id,
+            </if>
+            <if test="smsType != null">
+                sms_type,
+            </if>
+            <if test="smsPhone != null">
+                sms_phone,
+            </if>
+            <if test="smsContent != null">
+                sms_content,
+            </if>
+            <if test="creationTime != null">
+                creation_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="smsId != null">
+                #{smsId,jdbcType=BIGINT},
+            </if>
+            <if test="smsType != null">
+                #{smsType,jdbcType=VARCHAR},
+            </if>
+            <if test="smsPhone != null">
+                #{smsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="smsContent != null">
+                #{smsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null">
+                #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mettre.account.pojo.Sms">
+        update wc_sms
+        <set>
+            <if test="smsType != null">
+                sms_type = #{smsType,jdbcType=VARCHAR},
+            </if>
+            <if test="smsPhone != null">
+                sms_phone = #{smsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="smsContent != null">
+                sms_content = #{smsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null">
+                creation_time = #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where sms_id = #{smsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mettre.account.pojo.Sms">
+    update wc_sms
+    set sms_type = #{smsType,jdbcType=VARCHAR},
+      sms_phone = #{smsPhone,jdbcType=VARCHAR},
+      sms_content = #{smsContent,jdbcType=VARCHAR},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP}
+    where sms_id = #{smsId,jdbcType=BIGINT}
+  </update>
+</mapper>
