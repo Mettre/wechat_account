@@ -74,7 +74,7 @@ public class Swagger2Config {
 
     private List<Parameter> setHeaderToken() {
         ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<>();
+        List<Parameter> pars = new ArrayList<Parameter>();
         tokenPar.name(CommonConstant.AUTHORITIES).description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         return pars;

@@ -1,11 +1,11 @@
 package com.mettre.account.pojo;
 
-import cn.hutool.core.util.StrUtil;
 import com.mettre.account.pojoVM.UserVM;
+import com.mettre.account.util.RandomUtil;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 public class User {
@@ -51,12 +51,12 @@ public class User {
 
     //注册
     public User(UserVM userVM) {
-        this.userId = UUID.randomUUID().toString().replaceAll("-","");
+        this.userId = RandomUtil.generateUserId();
         this.userName = userVM.getUserName();
         this.signature = userVM.getSignature();
         this.gender = userVM.getGender();
         this.headAvatar = userVM.getHeadAvatar();
-        this.password = userVM.getPassword();
+        this.password = new BCryptPasswordEncoder().encode(userVM.getPassword().trim());
         this.phone = userVM.getPhone();
         this.city = userVM.getCity();
         this.age = userVM.getAge();
