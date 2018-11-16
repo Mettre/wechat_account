@@ -1,6 +1,7 @@
 package com.mettre.account.exception;
 
 
+import com.mettre.account.constant.CommonConstant;
 import com.mettre.account.enum_.ResultEnum;
 
 public class CustomerException extends RuntimeException {
@@ -13,7 +14,7 @@ public class CustomerException extends RuntimeException {
 
     public CustomerException(String message) {
         super(message);
-        this.errorCode = "400";
+        this.errorCode = CommonConstant.ERROR;
     }
 
     public String getErrorCode() {

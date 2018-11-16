@@ -1,7 +1,7 @@
 package com.mettre.account.base;
 
+import com.mettre.account.constant.CommonConstant;
 import com.mettre.account.enum_.ResultEnum;
-import com.mettre.account.exception.ErrorCode;
 
 /**
  * @author Exrick
@@ -14,19 +14,19 @@ public class ResultUtil<T> {
         result = new Result<>();
         result.setSuccess(true);
         result.setMessage("success");
-        result.setCode(ErrorCode.UNKNOW);
+        result.setCode(CommonConstant.UNKNOW);
     }
 
     public Result<T> setData(T t) {
         this.result.setData(t);
-        this.result.setCode(ErrorCode.UNKNOW);
+        this.result.setCode(CommonConstant.UNKNOW);
         return this.result;
     }
 
     public Result<T> setSuccessMsg(String msg) {
         this.result.setSuccess(true);
         this.result.setMessage(msg);
-        this.result.setCode(ErrorCode.UNKNOW);
+        this.result.setCode(CommonConstant.UNKNOW);
         this.result.setData(null);
         return this.result;
     }
@@ -34,14 +34,14 @@ public class ResultUtil<T> {
     public Result<T> setSuccess() {
         this.result.setSuccess(true);
         this.result.setMessage("成功");
-        this.result.setCode(ErrorCode.UNKNOW);
+        this.result.setCode(CommonConstant.UNKNOW);
         this.result.setData(null);
         return this.result;
     }
 
     public Result<T> setData(T t, String msg) {
         this.result.setData(t);
-        this.result.setCode(ErrorCode.UNKNOW);
+        this.result.setCode(CommonConstant.UNKNOW);
         this.result.setMessage(msg);
         return this.result;
     }
@@ -49,7 +49,7 @@ public class ResultUtil<T> {
     public Result<T> setErrorMsg(String msg) {
         this.result.setSuccess(false);
         this.result.setMessage(msg);
-        this.result.setCode(ErrorCode.ERROR);
+        this.result.setCode(CommonConstant.ERROR);
         return this.result;
     }
 

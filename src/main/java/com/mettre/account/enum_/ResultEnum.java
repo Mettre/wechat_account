@@ -16,10 +16,10 @@ public enum ResultEnum {
 
 
 
-
-
-
-    GOODS_ID_NOT_EMPTY("E108", "该手机号已注册");
+    OK("200", "成功"),
+    SINGTIMEOUT("400", "超时"),
+    GOODS_ID_NOT_EMPTY("E108", "该手机号已注册"),
+    PERMISSION_DENIED("E401", "未登录");
 
     private String code;
     private String msg;
