@@ -18,7 +18,10 @@ public enum ResultEnum {
 
     OK("200", "成功"),
     SINGTIMEOUT("400", "超时"),
-    GOODS_ID_NOT_EMPTY("E108", "该手机号已注册"),
+    UNREGISTER("E107", "该手机号未注册"),
+    REGISTERED("E108", "该手机号已注册"),
+    ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
+    CATEGORYCREATED("E110", "该分类已创建"),
     PERMISSION_DENIED("E401", "未登录");
 
     private String code;

@@ -7,6 +7,7 @@ import com.mettre.account.pojo.User;
 import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(UserVM record) {
         if (UserMapper.selectByPrimaryKey(record.getPhone()) != null) {
-            throw new CustomerException(ResultEnum.GOODS_ID_NOT_EMPTY);
+            throw new CustomerException(ResultEnum.REGISTERED);
         }
         User user = new User(record);
         return UserMapper.insert(user);
@@ -37,9 +38,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVM selectByPrimaryKey(String userId) {
+    public User selectByPrimaryKey(String userId) {
         return null;
     }
+
+    @Override
+    public User selectByPhoneAndPassword(String phone, String password) {
+        User user = UserMapper.selectByPhone(phone);
+        if(user==null){
+            throw new CustomerException(ResultEnum.UNREGISTER);
+        }
+        if(!new BCryptPasswordEncoder().matches(password,user.getPassword())){
+            throw new CustomerException(ResultEnum.ACCOUNT_PASSWORD_ERROR);
+        }
+        return new User(user);
+    }
+
 
     @Override
     public int updateByPrimaryKeySelective(UserVM record) {

@@ -34,6 +34,9 @@ public class User {
 
     private Date updateTime;
 
+    public User() {
+    }
+
     public User(String userId, String userName, String signature, String gender, String headAvatar, String password, String phone, String city, Integer age, String backgroundWall, Date creationTime, Date updateTime) {
         this.userId = userId;
         this.userName = userName;
@@ -48,6 +51,22 @@ public class User {
         this.creationTime = creationTime;
         this.updateTime = updateTime;
     }
+
+
+    //个人信息没有密码
+    public User(User user) {
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.signature = user.getSignature();
+        this.gender = user.getGender();
+        this.headAvatar = user.getHeadAvatar();
+        this.phone = user.getPhone();
+        this.city = user.getCity();
+        this.age = user.getAge();
+        this.backgroundWall = user.getBackgroundWall();
+        this.creationTime = user.creationTime;
+    }
+
 
     //注册
     public User(UserVM userVM) {

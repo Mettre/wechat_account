@@ -19,12 +19,21 @@
     user_id, user_name, signature, gender, head_avatar, password, phone, city, age, background_wall, 
     creation_time, update_time
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from wc_user
         where user_id = #{userId,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wc_user
+        where phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from wc_user
     where user_id = #{userId,jdbcType=VARCHAR}

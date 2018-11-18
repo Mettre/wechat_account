@@ -1,5 +1,6 @@
 package com.mettre.account.service;
 
+import com.mettre.account.pojo.User;
 import com.mettre.account.pojoVM.UserVM;
 
 public interface UserService {
@@ -10,7 +11,9 @@ public interface UserService {
 
     int insertSelective(UserVM record);
 
-    UserVM selectByPrimaryKey(String userId);
+    User selectByPrimaryKey(String userId);
+
+    User selectByPhoneAndPassword(String phone, String password);
 
     int updateByPrimaryKeySelective(UserVM record);
 
