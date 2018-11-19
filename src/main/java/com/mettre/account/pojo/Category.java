@@ -16,7 +16,7 @@ public class Category {
 
     private Date creationTime;
 
-    private boolean isShow;
+    private Boolean isShow;
 
     public Category() {
 
