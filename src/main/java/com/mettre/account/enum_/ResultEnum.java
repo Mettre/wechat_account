@@ -22,6 +22,7 @@ public enum ResultEnum {
     REGISTERED("E108", "该手机号已注册"),
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),
+    USERIDNOT("E111", "用户信息不存在"),
     PERMISSION_DENIED("E401", "未登录");
 
     private String code;

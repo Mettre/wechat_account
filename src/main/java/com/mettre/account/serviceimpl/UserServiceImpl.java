@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(UserVM record) {
-        if (UserMapper.selectByPrimaryKey(record.getPhone()) != null) {
+        if (UserMapper.selectByPhone(record.getPhone()) != null) {
             throw new CustomerException(ResultEnum.REGISTERED);
         }
         User user = new User(record);
@@ -39,16 +39,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectByPrimaryKey(String userId) {
-        return null;
+        return UserMapper.selectByPrimaryKey(userId);
     }
 
     @Override
     public User selectByPhoneAndPassword(String phone, String password) {
         User user = UserMapper.selectByPhone(phone);
-        if(user==null){
+        if (user == null) {
             throw new CustomerException(ResultEnum.UNREGISTER);
         }
-        if(!new BCryptPasswordEncoder().matches(password,user.getPassword())){
+        if (!new BCryptPasswordEncoder().matches(password, user.getPassword())) {
             throw new CustomerException(ResultEnum.ACCOUNT_PASSWORD_ERROR);
         }
         return new User(user);

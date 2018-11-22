@@ -6,8 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
 @Data
 public class UserVM {
 
-    private String userId;
-
     private String userName;
 
     private String signature;

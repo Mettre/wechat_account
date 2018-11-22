@@ -67,7 +67,6 @@ public class User {
         this.creationTime = user.creationTime;
     }
 
-
     //注册
     public User(UserVM userVM) {
         this.userId = RandomUtil.generateUserId();
