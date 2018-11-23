@@ -39,7 +39,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectByPrimaryKey(String userId) {
-        return UserMapper.selectByPrimaryKey(userId);
+        User user = UserMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            throw new CustomerException(ResultEnum.USERIDNOT);
+        }
+        return user;
     }
 
     @Override

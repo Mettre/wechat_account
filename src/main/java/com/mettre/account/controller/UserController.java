@@ -2,10 +2,7 @@ package com.mettre.account.controller;
 
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
-import com.mettre.account.enum_.ResultEnum;
-import com.mettre.account.exception.CustomerException;
 import com.mettre.account.feign.TestClient;
-import com.mettre.account.pojo.User;
 import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.service.UserService;
 import io.swagger.annotations.Api;
@@ -45,12 +42,8 @@ public class UserController {
 
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     @ApiOperation(value = "获取个人信息")
-    public Result<Object> findUserInfo(@Valid @PathVariable String userId) {
-        User user = userService.selectByPrimaryKey(userId);
-        if (user == null) {
-            throw new CustomerException(ResultEnum.USERIDNOT);
-        }
-        return new ResultUtil<>().setData(user);
+    public Result<Object> findUserInfo(@RequestParam String userId) {
+        return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
     }
 
 
