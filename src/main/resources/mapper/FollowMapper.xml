@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mettre.account.mapper.FollowMapper">
+    <resultMap id="BaseResultMap" type="com.mettre.account.pojo.Follow">
+        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="followed_user" property="followedUser" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!--我的关注-->
+    <resultMap id="BaseResultMap2" type="com.mettre.account.pojo.Follow">
+        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
+        <result column="followed_user" property="followedUser" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="user_name" property="followedUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--我的粉丝-->
+    <resultMap id="BaseResultMap3" type="com.mettre.account.pojo.Follow">
+        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column">
+    follow_id, user_id, followed_user, status, creation_time, update_time
+  </sql>
+
+    <!--我的好友列表-->
+    <sql id="Base_Column_List">
+    wc_follow.follow_id,wc_follow2.followed_user,wc_user.user_name,wc_follow.update_time
+  </sql>
+
+    <!--我的关注列表-->
+    <sql id="Base_Column_List2">
+    wc_follow.follow_id,wc_follow.followed_user,wc_user.user_name,wc_follow.update_time
+  </sql>
+
+    <!--我的粉丝列表-->
+    <sql id="Base_Column_List3">
+    wc_follow.follow_id,wc_follow.user_id,wc_user.user_name,wc_follow.update_time
+  </sql>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column"/>
+        from wc_follow
+        where follow_id = #{followId,jdbcType=BIGINT}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wc_follow
+    where follow_id = #{followId,jdbcType=BIGINT}
+  </delete>
+
+
+    <insert id="insert" parameterType="com.mettre.account.pojo.Follow">
+    insert into wc_follow (follow_id, user_id, followed_user, 
+      status, creation_time, update_time
+      )
+    values (#{followId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{followedUser,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{creationTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+
+    <insert id="insertSelective" parameterType="com.mettre.account.pojo.Follow">
+        insert into wc_follow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="followId != null">
+                follow_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="followedUser != null">
+                followed_user,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="creationTime != null">
+                creation_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="followId != null">
+                #{followId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="followedUser != null">
+                #{followedUser,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="creationTime != null">
+                #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.mettre.account.pojo.Follow">
+        update wc_follow
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="followedUser != null">
+                followed_user = #{followedUser,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="creationTime != null">
+                creation_time = #{creationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where follow_id = #{followId,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.mettre.account.pojo.Follow">
+    update wc_follow
+    set user_id = #{userId,jdbcType=VARCHAR},
+      followed_user = #{followedUser,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where follow_id = #{followId,jdbcType=BIGINT}
+  </update>
+
+
+    <!--查找是否关注-->
+    <select id="findWhetherFollow" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column"/>
+        from wc_follow
+        where user_id = #{userId,jdbcType=VARCHAR}
+        AND
+        followed_user = #{followedUser,jdbcType=VARCHAR}
+    </select>
+
+    <!--取消关注 已有记录-->
+    <update id="cancelFollow">
+        update wc_follow
+        <set>
+            status = false,
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+        AND
+        followed_user = #{followedUser,jdbcType=VARCHAR}
+    </update>
+
+    <!--添加关注 已有记录-->
+    <update id="addFollow">
+        update wc_follow
+        <set>
+            status = true ,
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+        AND
+        followed_user = #{followedUser,jdbcType=VARCHAR}
+    </update>
+
+    <!--我的关注列表-->
+    <select id="myFollowPageVo" resultMap="BaseResultMap2">
+        SELECT
+        <include refid="Base_Column_List2"></include>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.followed_user = wc_user.user_id
+        where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
+        order by wc_follow.update_time asc
+    </select>
+
+
+    <!--我的粉丝列表-->
+    <select id="myFansPageVo" resultMap="BaseResultMap3">
+        SELECT
+        <include refid="Base_Column_List3"></include>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.user_id = wc_user.user_id
+        where wc_follow.followed_user = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
+        order by wc_follow.update_time asc
+    </select>
+
+    <!--我的好友列表   互粉既是好友-->
+    <select id="myFriendsPageVo" resultMap="BaseResultMap2">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.followed_user = wc_user.user_id
+        inner join wc_follow as wc_follow2
+        on wc_follow.user_id = wc_follow2.followed_user
+        and wc_follow.followed_user = wc_follow2.user_id
+        and wc_follow2.status = true
+        where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
+        order by wc_follow.update_time asc
+    </select>
+
+
+</mapper>

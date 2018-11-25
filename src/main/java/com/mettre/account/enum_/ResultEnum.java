@@ -23,6 +23,9 @@ public enum ResultEnum {
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),
     USERIDNOT("E111", "用户信息不存在"),
+    CANCELFOLLOW("E112", "取消关注失败"),
+    FOLLOWERROR("E113", "关注失败"),
+    HAVEDFOLLOWED("E114", "已经是关注关系"),
     PERMISSION_DENIED("E401", "未登录");
 
     private String code;
