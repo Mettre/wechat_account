@@ -55,6 +55,11 @@ public final class RandomUtil {
         return "F" + DateUtil.getCurrentTimeStr() + RandomStringUtils.randomNumeric(4);
     }
 
+    public static String generateVisitorNumber() {
+        return "V" + DateUtil.getCurrentTimeStr() + RandomStringUtils.randomNumeric(4);
+    }
+
+
     public static String generateUserId() {
         return DateUtil.getCurrentTimeStr() + RandomStringUtils.randomNumeric(5);
     }

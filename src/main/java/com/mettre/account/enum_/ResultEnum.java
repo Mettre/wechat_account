@@ -24,6 +24,9 @@ public enum ResultEnum {
     REGISTERERROR("E116", "注册失败"),
     GENBDERERROY("E117", "性别不能为空"),
 
+
+    VISTORERROY("E118", "访客记录插入失败"),
+
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),
     USERIDNOT("E111", "用户信息不存在"),

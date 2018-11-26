@@ -1,14 +1,9 @@
-package com.mettre.account.mapper;
+package com.mettre.account.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.pojo.Visitor;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-@Component
-public interface VisitorMapper {
+public interface VisitorService {
 
     int deleteByPrimaryKey(Long visitorId);
 
@@ -22,5 +17,5 @@ public interface VisitorMapper {
 
     int updateByPrimaryKey(Visitor record);
 
-    List<Visitor> myVisitorPageVo(Page<Visitor> page, @Param(value = "visitorsUesr")String visitorsUesr);
+    Page<Visitor> myVisitorPageVo(Page<Visitor> page, String visitorsUesr);
 }

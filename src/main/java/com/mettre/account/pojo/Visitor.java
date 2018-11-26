@@ -1,9 +1,14 @@
 package com.mettre.account.pojo;
 
+import com.mettre.account.pojoVM.VisitorVM;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class Visitor {
-    private String visitorId;
+
+    private Long visitorId;
 
     private Date creationTime;
 
@@ -11,35 +16,14 @@ public class Visitor {
 
     private String visitorsUesr;
 
-    public String getVisitorId() {
-        return visitorId;
+    private String userName;
+
+    public Visitor() {
     }
 
-    public void setVisitorId(String visitorId) {
-        this.visitorId = visitorId == null ? null : visitorId.trim();
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    public String getVisitorsUesr() {
-        return visitorsUesr;
-    }
-
-    public void setVisitorsUesr(String visitorsUesr) {
-        this.visitorsUesr = visitorsUesr == null ? null : visitorsUesr.trim();
+    public Visitor(VisitorVM visitorVM) {
+        this.creationTime = new Date();
+        this.userId = visitorVM.getUserId();
+        this.visitorsUesr = visitorVM.getVisitorsUesr();
     }
 }
