@@ -1,5 +1,6 @@
 package com.mettre.account.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mettre.account.pojoVM.FollowVM;
 import lombok.Data;
 
@@ -24,6 +25,11 @@ public class Follow {
     private String userName;
 
     private String followedUserName;
+
+    @JsonIgnore
+    private String userId2;//判断是否互关（为空则不互关）
+
+    private Boolean eachOther; // true:互关
 
     public Follow() {
 

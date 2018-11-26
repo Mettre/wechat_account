@@ -1,5 +1,7 @@
 package com.mettre.account.pojo;
 
+import cn.hutool.core.util.StrUtil;
+import com.mettre.account.enum_.GenderEnum;
 import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.util.RandomUtil;
 import lombok.Data;
@@ -16,7 +18,7 @@ public class User {
 
     private String signature;
 
-    private String gender;
+    private GenderEnum gender;
 
     private String headAvatar;
 
@@ -37,19 +39,18 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String userName, String signature, String gender, String headAvatar, String password, String phone, String city, Integer age, String backgroundWall, Date creationTime, Date updateTime) {
+    //修改用户信息
+    public User(UserVM userVM, String userId) {
         this.userId = userId;
-        this.userName = userName;
-        this.signature = signature;
-        this.gender = gender;
-        this.headAvatar = headAvatar;
-        this.password = password;
-        this.phone = phone;
-        this.city = city;
-        this.age = age;
-        this.backgroundWall = backgroundWall;
-        this.creationTime = creationTime;
-        this.updateTime = updateTime;
+        this.userName = userVM.getUserName();
+        this.signature = userVM.getSignature();
+        this.gender = userVM.getGender();
+        this.headAvatar = userVM.getHeadAvatar();
+        this.password = StrUtil.isBlank(userVM.getPassword()) ? null : new BCryptPasswordEncoder().encode(userVM.getPassword().trim());
+        this.city = userVM.getCity();
+        this.age = userVM.getAge();
+        this.backgroundWall = userVM.getBackgroundWall();
+        this.updateTime = new Date();
     }
 
 

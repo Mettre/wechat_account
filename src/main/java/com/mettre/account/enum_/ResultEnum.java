@@ -20,6 +20,10 @@ public enum ResultEnum {
     SINGTIMEOUT("400", "超时"),
     UNREGISTER("E107", "该手机号未注册"),
     REGISTERED("E108", "该手机号已注册"),
+    MODIFYUSERINFOERROR("E115", "个人修改信息失败"),
+    REGISTERERROR("E116", "注册失败"),
+    GENBDERERROY("E117", "性别不能为空"),
+
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),
     USERIDNOT("E111", "用户信息不存在"),

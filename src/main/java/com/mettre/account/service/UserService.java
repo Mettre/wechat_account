@@ -15,7 +15,7 @@ public interface UserService {
 
     User selectByPhoneAndPassword(String phone, String password);
 
-    int updateByPrimaryKeySelective(UserVM record);
+    int updateByPrimaryKeySelective(UserVM record,String userId);
 
     int updateByPrimaryKey(UserVM record);
 }

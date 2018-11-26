@@ -1,5 +1,8 @@
 package com.mettre.account.serviceimpl;
 
+import cn.hutool.core.util.StrUtil;
+import com.mettre.account.base.ReturnType;
+import com.mettre.account.enum_.GenderEnum;
 import com.mettre.account.enum_.ResultEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.mapper.UserMapper;
@@ -28,8 +31,12 @@ public class UserServiceImpl implements UserService {
         if (UserMapper.selectByPhone(record.getPhone()) != null) {
             throw new CustomerException(ResultEnum.REGISTERED);
         }
+        if (!GenderEnum.contains(record.getGender().name())) {
+            throw new CustomerException(ResultEnum.GENBDERERROY);
+        }
         User user = new User(record);
-        return UserMapper.insert(user);
+        int type = UserMapper.insert(user);
+        return ReturnType.ReturnType(type, ResultEnum.REGISTERERROR);
     }
 
     @Override
@@ -58,10 +65,13 @@ public class UserServiceImpl implements UserService {
         return new User(user);
     }
 
-
     @Override
-    public int updateByPrimaryKeySelective(UserVM record) {
-        return 0;
+    public int updateByPrimaryKeySelective(UserVM record, String userId) {
+
+        UserVM.UserVmEmpty(record);
+        User user = new User(record, userId);
+        int type = UserMapper.updateByPrimaryKeySelective(user);
+        return ReturnType.ReturnType(type, ResultEnum.MODIFYUSERINFOERROR);
     }
 
     @Override

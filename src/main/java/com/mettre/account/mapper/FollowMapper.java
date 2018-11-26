@@ -30,5 +30,7 @@ public interface FollowMapper {
 
     List<Follow> myFollowPageVo(Page<Follow> page, @Param(value = "userId")String userId);
 
+    List<Follow> myFansPageVo(Page<Follow> page, @Param(value = "userId")String userId);
+
     List<Follow> myFriendsPageVo(Page<Follow> page, @Param(value = "userId")String userId);
 }

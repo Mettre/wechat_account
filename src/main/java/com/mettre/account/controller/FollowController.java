@@ -21,10 +21,8 @@ import javax.validation.Valid;
 @Api(description = "关注")
 public class FollowController {
 
-
     @Autowired
     public FollowService followService;
-
 
     @RequestMapping(value = "/addFollow", method = RequestMethod.POST)
     @ApiOperation(value = "添加关注")
@@ -43,24 +41,24 @@ public class FollowController {
     }
 
     @RequestMapping(value = "/myFriendsList", method = RequestMethod.POST)
-    @ApiOperation(value = "我的朋友列表")
-    public Result<Object> myFriendsPageVo(@RequestBody BasePage basePage,@RequestParam String userId) {
+    @ApiOperation(value = "我的好友列表")
+    public Result<Object> myFriendsPageVo(@RequestBody BasePage basePage, @RequestParam String userId) {
         Page<Follow> page = new Page<>(basePage.getPage(), basePage.getSize());
-        return new ResultUtil<>().setData(followService.myFriendsPageVo(page,userId));
+        return new ResultUtil<>().setData(followService.myFriendsPageVo(page, userId));
     }
 
     @RequestMapping(value = "/myFollowList", method = RequestMethod.POST)
-    @ApiOperation(value = "我的关注列表")
-    public Result<Object> myFollowList(@RequestBody BasePage basePage,@RequestParam String userId) {
+    @ApiOperation(value = "我的关注列表识别互关")
+    public Result<Object> myFollow2List(@RequestBody BasePage basePage, @RequestParam String userId) {
         Page<Follow> page = new Page<>(basePage.getPage(), basePage.getSize());
-        return new ResultUtil<>().setData(followService.myFollowPageVo(page,userId));
+        return new ResultUtil<>().setData(followService.myFollowPageVo(page, userId));
     }
 
     @RequestMapping(value = "/myFansList", method = RequestMethod.POST)
-    @ApiOperation(value = "我的粉丝列表")
-    public Result<Object> myFansList(@RequestBody BasePage basePage,@RequestParam String userId) {
+    @ApiOperation(value = "我的粉丝列表识别互关")
+    public Result<Object> myFans2List(@RequestBody BasePage basePage, @RequestParam String userId) {
         Page<Follow> page = new Page<>(basePage.getPage(), basePage.getSize());
-        return new ResultUtil<>().setData(followService.myFollowPageVo(page,userId));
+        return new ResultUtil<>().setData(followService.myFansPageVo(page, userId));
     }
 
 }

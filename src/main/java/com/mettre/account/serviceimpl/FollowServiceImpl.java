@@ -1,5 +1,6 @@
 package com.mettre.account.serviceimpl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.base.ReturnType;
 import com.mettre.account.enum_.ResultEnum;
@@ -36,7 +37,7 @@ public class FollowServiceImpl implements FollowService {
         int type = 0;
         Follow follow = followMapper.findWhetherFollow(new Follow(followVM));
         if (follow != null) {
-            if(follow.getStatus()){
+            if (follow.getStatus()) {
                 throw new CustomerException(ResultEnum.HAVEDFOLLOWED);
             }
             type = followMapper.addFollow(new Follow(followVM));
@@ -89,6 +90,23 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public Page<Follow> myFollowPageVo(Page<Follow> page, String userId) {
         List<Follow> followList = (List<Follow>) followMapper.myFollowPageVo(page, userId);
+        if (followList != null && followList.size() > 0) {
+            for (Follow follow : followList) {
+                follow.setEachOther(StrUtil.isNotBlank(follow.getUserId2()));
+            }
+        }
+        page = page.setRecords(followList);
+        return page;
+    }
+
+    @Override
+    public Page<Follow> myFansPageVo(Page<Follow> page, String userId) {
+        List<Follow> followList = (List<Follow>) followMapper.myFansPageVo(page, userId);
+        if (followList != null && followList.size() > 0) {
+            for (Follow follow : followList) {
+                follow.setEachOther(StrUtil.isNotBlank(follow.getUserId2()));
+            }
+        }
         page = page.setRecords(followList);
         return page;
     }

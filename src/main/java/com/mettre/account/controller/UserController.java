@@ -33,10 +33,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiOperation(value = "用户登录")
-    public Result<Object> login(@Valid @RequestBody UserVM userVM) {
-
-        String phone = userVM.getPhone();
-        String password = userVM.getPassword();
+    public Result<Object> login(@RequestParam String phone, @RequestParam String password) {
         return new ResultUtil<>().setData(userService.selectByPhoneAndPassword(phone, password));
     }
 
@@ -46,6 +43,12 @@ public class UserController {
         return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
     }
 
+
+    @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST)
+    @ApiOperation(value = "修改个人信息")
+    public Result<Object> modifyUserInfo(@RequestBody UserVM userVM,@RequestParam String userId) {
+        return new ResultUtil<>().setData(userService.updateByPrimaryKeySelective(userVM,userId));
+    }
 
     @GetMapping(value = "/user/hello")
     public String hello() {

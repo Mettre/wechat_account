@@ -11,22 +11,22 @@
     </resultMap>
 
 
-    <!--我的关注-->
-    <resultMap id="BaseResultMap2" type="com.mettre.account.pojo.Follow">
-        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
-        <result column="followed_user" property="followedUser" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="TINYINT"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <result column="user_name" property="followedUserName" jdbcType="VARCHAR"/>
-    </resultMap>
-
-    <!--我的粉丝-->
-    <resultMap id="BaseResultMap3" type="com.mettre.account.pojo.Follow">
+    <!--我的粉丝列表  识别互关-->
+    <resultMap id="BaseResultMap5" type="com.mettre.account.pojo.Follow">
         <id column="follow_id" property="followId" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_id2" property="userId2" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--我的关注列表  识别互关-->
+    <resultMap id="BaseResultMap4" type="com.mettre.account.pojo.Follow">
+        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
+        <result column="followed_user" property="followedUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="user_name" property="followedUserName" jdbcType="VARCHAR"/>
+        <result column="user_id2" property="userId2" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -39,16 +39,15 @@
     wc_follow.follow_id,wc_follow2.followed_user,wc_user.user_name,wc_follow.update_time
   </sql>
 
-    <!--我的关注列表-->
-    <sql id="Base_Column_List2">
-    wc_follow.follow_id,wc_follow.followed_user,wc_user.user_name,wc_follow.update_time
+    <!--我的粉丝列表  识别互关-->
+    <sql id="Base_Column_List5">
+    wc_follow.follow_id, wc_follow.user_id, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time
   </sql>
 
-    <!--我的粉丝列表-->
-    <sql id="Base_Column_List3">
-    wc_follow.follow_id,wc_follow.user_id,wc_user.user_name,wc_follow.update_time
+    <!--我的关注列表  识别互关-->
+    <sql id="Base_Column_List4">
+    wc_follow.follow_id, wc_follow.followed_user, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time
   </sql>
-
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -191,33 +190,8 @@
         followed_user = #{followedUser,jdbcType=VARCHAR}
     </update>
 
-    <!--我的关注列表-->
-    <select id="myFollowPageVo" resultMap="BaseResultMap2">
-        SELECT
-        <include refid="Base_Column_List2"></include>
-        FROM wc_follow
-        left join wc_user
-        on wc_follow.followed_user = wc_user.user_id
-        where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
-        and wc_follow.status = true
-        order by wc_follow.update_time asc
-    </select>
-
-
-    <!--我的粉丝列表-->
-    <select id="myFansPageVo" resultMap="BaseResultMap3">
-        SELECT
-        <include refid="Base_Column_List3"></include>
-        FROM wc_follow
-        left join wc_user
-        on wc_follow.user_id = wc_user.user_id
-        where wc_follow.followed_user = #{userId,jdbcType=VARCHAR}
-        and wc_follow.status = true
-        order by wc_follow.update_time asc
-    </select>
-
     <!--我的好友列表   互粉既是好友-->
-    <select id="myFriendsPageVo" resultMap="BaseResultMap2">
+    <select id="myFriendsPageVo" resultMap="BaseResultMap4">
         SELECT
         <include refid="Base_Column_List"></include>
         FROM wc_follow
@@ -232,5 +206,37 @@
         order by wc_follow.update_time asc
     </select>
 
+
+    <!--我的关注列表  识别互关-->
+    <select id="myFollowPageVo" resultMap="BaseResultMap4">
+        SELECT
+        <include refid="Base_Column_List4"></include>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.followed_user = wc_user.user_id
+        left join wc_follow as wc_follow2
+        on wc_follow.user_id = wc_follow2.followed_user
+        and wc_follow.followed_user = wc_follow2.user_id
+        and wc_follow2.status = true
+        where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
+        order by wc_follow.update_time asc
+    </select>
+
+    <!--我的粉丝列表  识别互关-->
+    <select id="myFansPageVo" resultMap="BaseResultMap5">
+        SELECT
+        <include refid="Base_Column_List5"></include>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.user_id = wc_user.user_id
+        left join wc_follow as wc_follow2
+        on wc_follow.user_id = wc_follow2.followed_user
+        and wc_follow.followed_user = wc_follow2.user_id
+        and wc_follow2.status = true
+        where wc_follow.followed_user = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
+        order by wc_follow.update_time asc
+    </select>
 
 </mapper>
