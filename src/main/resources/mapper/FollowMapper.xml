@@ -220,7 +220,7 @@
         and wc_follow2.status = true
         where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
         and wc_follow.status = true
-        order by wc_follow.update_time asc
+        order by wc_follow.update_time desc
     </select>
 
     <!--我的粉丝列表  识别互关-->
@@ -236,7 +236,7 @@
         and wc_follow2.status = true
         where wc_follow.followed_user = #{userId,jdbcType=VARCHAR}
         and wc_follow.status = true
-        order by wc_follow.update_time asc
+        order by wc_follow.update_time desc
     </select>
 
 </mapper>

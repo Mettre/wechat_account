@@ -92,13 +92,14 @@
     <select id="myVisitorPageVo" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from wc_visitor
+        from
+        (SELECT * FROM wc_visitor where visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR} order by creation_time desc) as
+        wc_visitor
         left join wc_user
         on wc_visitor.user_id = wc_user.user_id
-        where visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR}
         group by
         wc_visitor.user_id
-        order by wc_visitor.creation_time asc
+        order by wc_visitor.creation_time desc
     </select>
 
 </mapper>
