@@ -26,6 +26,8 @@ public enum ResultEnum {
 
 
     VISTORERROY("E118", "访客记录插入失败"),
+    VISTORDELETEERROY("E119", "访客记录删除失败"),
+    VISTORSELECTERROY("E119", "访客记录插入失败"),
 
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),

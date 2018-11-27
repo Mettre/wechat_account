@@ -13,9 +13,13 @@
     wc_visitor.visitor_id, wc_visitor.creation_time, wc_visitor.user_id,user_name
   </sql>
 
+    <sql id="Base_Column">
+    visitor_id, creation_time,user_id,visitors_uesr
+  </sql>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column"/>
         from wc_visitor
         where visitor_id = #{visitorId,jdbcType=BIGINT}
     </select>
@@ -23,6 +27,25 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from wc_visitor
     where visitor_id = #{visitorId,jdbcType=BIGINT}
+  </delete>
+
+    <!--&lt;!&ndash;删除空间访问某个人记录&ndash;&gt;-->
+    <!--<delete id="deleteAllVisitor" parameterType="java.lang.Long">-->
+    <!--delete from wc_visitor where user_id =-->
+    <!--wc_visitor3.user_id and visitors_uesr =-->
+    <!--wc_visitor3.visitors_uesr-->
+    <!--(select wc_visitor2.user_id,wc_visitor2.visitors_uesr from-->
+    <!--(select user_id,visitors_uesr from wc_visitor-->
+    <!--where visitor_id = #{visitorId,jdbcType=BIGINT}-->
+    <!--) as wc_visitor2) as wc_visitor3-->
+  <!--</delete>-->
+
+
+    <!--删除空间访问某个人记录-->
+    <delete id="deleteAllVisitor" parameterType="java.lang.String">
+    delete from wc_visitor
+    where user_id = #{userId,jdbcType=VARCHAR}
+    and visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR}
   </delete>
 
     <insert id="insert" parameterType="com.mettre.account.pojo.Visitor">

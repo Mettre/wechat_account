@@ -38,4 +38,18 @@ public class VisitorController {
         return new ResultUtil<>().setData(visitorService.myVisitorPageVo(page, visitorsUesr));
     }
 
+    @RequestMapping(value = "/deletePersonalVisitor", method = RequestMethod.POST)
+    @ApiOperation(value = "删除空间访问某个人记录")
+    public Result<Object> deletePersonalVisitor(@RequestParam Long visitorId) {
+        visitorService.deleteAllVisitor(visitorId);
+        return new ResultUtil<>().setSuccess();
+    }
+
+    @RequestMapping(value = "/deleteStripVisitor", method = RequestMethod.GET)
+    @ApiOperation(value = "删除空间访问某单条记录")
+    public Result<Object> deleteStripVisitor(@RequestParam Long visitorId) {
+        visitorService.deleteByPrimaryKey(visitorId);
+        return new ResultUtil<>().setSuccess();
+    }
+
 }

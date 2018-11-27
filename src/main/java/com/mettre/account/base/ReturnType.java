@@ -11,4 +11,11 @@ public class ReturnType {
         }
         return type;
     }
+
+    public static Object ReturnType(Object object, ResultEnum resultEnum) {
+        if (object ==null) {
+            throw new CustomerException(resultEnum);
+        }
+        return object;
+    }
 }
