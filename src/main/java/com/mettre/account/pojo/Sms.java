@@ -1,11 +1,18 @@
 package com.mettre.account.pojo;
 
+import com.mettre.account.enum_.SmsTypeEnum;
+import com.mettre.account.pojoVM.SmsVM;
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Sms {
+@Data
+public class Sms implements Serializable {
+
     private Long smsId;
 
-    private String smsType;
+    private SmsTypeEnum smsType;
 
     private String smsPhone;
 
@@ -13,43 +20,18 @@ public class Sms {
 
     private Date creationTime;
 
-    public Long getSmsId() {
-        return smsId;
+    private String userId;
+
+    private String userName;
+
+    public Sms() {
     }
 
-    public void setSmsId(Long smsId) {
-        this.smsId = smsId;
-    }
-
-    public String getSmsType() {
-        return smsType;
-    }
-
-    public void setSmsType(String smsType) {
-        this.smsType = smsType == null ? null : smsType.trim();
-    }
-
-    public String getSmsPhone() {
-        return smsPhone;
-    }
-
-    public void setSmsPhone(String smsPhone) {
-        this.smsPhone = smsPhone == null ? null : smsPhone.trim();
-    }
-
-    public String getSmsContent() {
-        return smsContent;
-    }
-
-    public void setSmsContent(String smsContent) {
-        this.smsContent = smsContent == null ? null : smsContent.trim();
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
+//    新增短信
+    public Sms(SmsVM smsVM) {
+        this.smsType = smsVM.getSmsType();
+        this.smsPhone = smsVM.getSmsPhone();
+        this.smsContent = smsVM.getSmsContent();
+        this.creationTime = new Date();
     }
 }

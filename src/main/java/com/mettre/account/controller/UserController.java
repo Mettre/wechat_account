@@ -43,11 +43,10 @@ public class UserController {
         return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
     }
 
-
     @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST)
     @ApiOperation(value = "修改个人信息")
-    public Result<Object> modifyUserInfo(@RequestBody UserVM userVM,@RequestParam String userId) {
-        return new ResultUtil<>().setData(userService.updateByPrimaryKeySelective(userVM,userId));
+    public Result<Object> modifyUserInfo(@RequestBody UserVM userVM, @RequestParam String userId) {
+        return new ResultUtil<>().setData(userService.updateByPrimaryKeySelective(userVM, userId));
     }
 
     @GetMapping(value = "/user/hello")

@@ -34,7 +34,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public int insert(Visitor record) {
         int type = 0;
-        if(!record.getUserId().equals(record.getVisitorsUesr())){
+        if (!record.getUserId().equals(record.getVisitorsUesr())) {
             userService.selectByPrimaryKey(record.getUserId());
             userService.selectByPrimaryKey(record.getVisitorsUesr());
             type = visitorMapper.insert(record);
@@ -50,7 +50,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public Visitor selectByPrimaryKey(Long visitorId) {
 
-        return (Visitor) ReturnType.ReturnType(visitorMapper.selectByPrimaryKey(visitorId),ResultEnum.VISTORSELECTERROY);
+        return (Visitor) ReturnType.ReturnType(visitorMapper.selectByPrimaryKey(visitorId), ResultEnum.VISTORSELECTERROY);
     }
 
     @Override
@@ -71,10 +71,14 @@ public class VisitorServiceImpl implements VisitorService {
     }
 
     @Override
-    public int deleteAllVisitor(Long visitorId) {
-        Visitor visitor = visitorMapper.selectByPrimaryKey(visitorId);
-        int type = visitorMapper.deleteAllVisitor(visitor.getUserId(),visitor.getVisitorsUesr());
+    public int deleteAllVisitorFromVisitorId(Long visitorId) {
+        int type = visitorMapper.deleteAllVisitorFromVisitorId(visitorId);
         return ReturnType.ReturnType(type, ResultEnum.VISTORDELETEERROY);
+    }
 
+    @Override
+    public int deleteAllVisitor(String userId, String visitorsUesr) {
+        int type = visitorMapper.deleteAllVisitor(userId, visitorsUesr);
+        return ReturnType.ReturnType(type, ResultEnum.VISTORDELETEERROY);
     }
 }

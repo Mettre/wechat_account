@@ -3,12 +3,14 @@ package com.mettre.account.pojo;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Min;
+
 @Data
 public class BasePage {
 
-    @NotBlank(message = "分页入参错误")
-    private int page;
+    @Min(value = 1, message = "分页入参错误")
+    private Integer page;
 
-    @NotBlank(message = "分页入参错误")
-    private int size;
+    @Min(value = 1, message = "分页入参错误")
+    private Integer size;
 }

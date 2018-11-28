@@ -2,6 +2,7 @@ package com.mettre.account.pojoVM;
 
 import com.mettre.account.enum_.GenderEnum;
 import com.mettre.account.exception.CustomerException;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Min;
 @Data
 public class UserVM {
 
+    @ApiModelProperty(value = "昵称")
     private String userName;
 
     private String signature;

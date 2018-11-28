@@ -7,26 +7,35 @@
         <result column="sms_phone" jdbcType="VARCHAR" property="smsPhone"/>
         <result column="sms_content" jdbcType="VARCHAR" property="smsContent"/>
         <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
     </resultMap>
+
     <sql id="Base_Column_List">
-    sms_id, sms_type, sms_phone, sms_content, creation_time
+    sms_id, sms_type, sms_phone, sms_content, wc_sms.creation_time, user_id, user_name
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from wc_sms
+        left join wc_user
+        on wc_sms.sms_phone = wc_user.phone
         where sms_id = #{smsId,jdbcType=BIGINT}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from wc_sms
     where sms_id = #{smsId,jdbcType=BIGINT}
   </delete>
+
     <insert id="insert" parameterType="com.mettre.account.pojo.Sms">
     insert into wc_sms (sms_id, sms_type, sms_phone, 
       sms_content, creation_time)
     values (#{smsId,jdbcType=BIGINT}, #{smsType,jdbcType=VARCHAR}, #{smsPhone,jdbcType=VARCHAR}, 
       #{smsContent,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP})
   </insert>
+
     <insert id="insertSelective" parameterType="com.mettre.account.pojo.Sms">
         insert into wc_sms
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -64,6 +73,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.mettre.account.pojo.Sms">
         update wc_sms
         <set>
@@ -82,6 +92,7 @@
         </set>
         where sms_id = #{smsId,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.mettre.account.pojo.Sms">
     update wc_sms
     set sms_type = #{smsType,jdbcType=VARCHAR},
@@ -90,4 +101,22 @@
       creation_time = #{creationTime,jdbcType=TIMESTAMP}
     where sms_id = #{smsId,jdbcType=BIGINT}
   </update>
+
+    <select id="findSmsListPageVo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM wc_sms
+        left join wc_user
+        on wc_sms.sms_phone = wc_user.phone
+        <where>
+            1=1
+            <if test="smsSearchVm.smsPhone != null">
+                and sms_phone = #{smsSearchVm.smsPhone}
+            </if>
+            <if test="smsSearchVm.smsType != null">
+                and sms_type = #{smsSearchVm.smsType}
+            </if>
+        </where>
+    </select>
+
 </mapper>

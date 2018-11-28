@@ -29,6 +29,10 @@ public enum ResultEnum {
     VISTORDELETEERROY("E119", "访客记录删除失败"),
     VISTORSELECTERROY("E119", "访客记录插入失败"),
 
+
+    SMSDELETEERROR("E120", "短信删除失败"),
+    SMS_SEND_ERROR("E121", "短信发送失败"),
+
     ACCOUNT_PASSWORD_ERROR("E109", "账号或者密码不正确"),
     CATEGORYCREATED("E110", "该分类已创建"),
     USERIDNOT("E111", "用户信息不存在"),

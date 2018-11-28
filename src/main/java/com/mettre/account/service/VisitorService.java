@@ -19,5 +19,7 @@ public interface VisitorService {
 
     Page<Visitor> myVisitorPageVo(Page<Visitor> page, String visitorsUesr);
 
-    int deleteAllVisitor(Long visitorId);
+    int deleteAllVisitorFromVisitorId(Long visitorId);
+
+    int deleteAllVisitor(String userId, String visitorsUesr);
 }

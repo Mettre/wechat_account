@@ -2,9 +2,7 @@ package com.mettre.account.enum_;
 
 public enum GenderEnum {
 
-
     MAN("男"), WOMAN("女");
-
 
     public String gender;
 

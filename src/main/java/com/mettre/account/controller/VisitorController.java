@@ -41,7 +41,7 @@ public class VisitorController {
     @RequestMapping(value = "/deletePersonalVisitor", method = RequestMethod.POST)
     @ApiOperation(value = "删除空间访问某个人记录")
     public Result<Object> deletePersonalVisitor(@RequestParam Long visitorId) {
-        visitorService.deleteAllVisitor(visitorId);
+        visitorService.deleteAllVisitorFromVisitorId(visitorId);
         return new ResultUtil<>().setSuccess();
     }
 

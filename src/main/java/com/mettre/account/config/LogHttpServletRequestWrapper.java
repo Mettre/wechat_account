@@ -26,7 +26,6 @@ public class LogHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	private static final Logger logger = LoggerFactory.getLogger(LogHttpServletRequestWrapper.class);
 
-
 	private ServletInputStream servletInputStream;
 
 	/**

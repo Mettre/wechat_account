@@ -1,18 +1,16 @@
-package com.mettre.account.mapper;
+package com.mettre.account.service;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.pojo.Sms;
 import com.mettre.account.pojoVM.SmsSearchVm;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import com.mettre.account.pojoVM.SmsVM;
 
-import java.util.List;
+public interface SmsService {
 
-@Component
-public interface SmsMapper {
     int deleteByPrimaryKey(Long smsId);
 
-    int insert(Sms record);
+    int insert(SmsVM smsVM) throws ClientException;
 
     int insertSelective(Sms record);
 
@@ -22,6 +20,5 @@ public interface SmsMapper {
 
     int updateByPrimaryKey(Sms record);
 
-    List<Sms> findSmsListPageVo(Page<Sms> page, @Param(value = "smsSearchVm") SmsSearchVm smsSearchVm);
-
+    Page<Sms> findSmsListPageVo(Page<Sms> page, SmsSearchVm smsSearchVm);
 }
