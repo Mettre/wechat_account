@@ -4,15 +4,19 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.base.ReturnType;
-import com.mettre.account.config.LogHttpServletRequestWrapper;
 import com.mettre.account.enum_.ResultEnum;
 import com.mettre.account.enum_.SmsTypeEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.mapper.SmsMapper;
+import com.mettre.account.mapper.UserMapper;
 import com.mettre.account.pojo.Sms;
+import com.mettre.account.pojo.User;
 import com.mettre.account.pojoVM.SmsSearchVm;
 import com.mettre.account.pojoVM.SmsVM;
+import com.mettre.account.service.RedisService;
 import com.mettre.account.service.SmsService;
+import com.mettre.account.util.AssembleUtils;
+import com.mettre.account.util.CreateVerifyCode;
 import com.mettre.account.util.SmsDemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +35,12 @@ public class SmsServiceImpl implements SmsService {
     @Autowired
     public SmsMapper smsMapper;
 
+    @Autowired
+    public UserMapper userMapper;
+
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public int deleteByPrimaryKey(Long smsId) {
         int type = smsMapper.deleteByPrimaryKey(smsId);
@@ -43,9 +53,26 @@ public class SmsServiceImpl implements SmsService {
         if (null == smsVM.getSmsType()) {
             throw new CustomerException("短信类型不能为空");
         }
-        int type = smsMapper.insert(new Sms(smsVM));
+
+        User user = userMapper.selectByPhone(smsVM.getSmsPhone());
+        switch (smsVM.getSmsType()){
+            case REGISTER:
+                if(user!=null)
+                    throw new CustomerException(ResultEnum.REGISTERED);
+                break;
+            case FORGET_PASSWORD:
+            case MODIFY_PASSWORD:
+                if(user==null)
+                    throw new CustomerException(ResultEnum.UNREGISTER);
+                break;
+        }
+        String code =new CreateVerifyCode().randomInteger(4);
+        Sms sms = new Sms(smsVM,code);
+        redisService.set(AssembleUtils.sendMessageUtils(sms.getSmsPhone(),smsVM.getSmsType()), code);
+        redisService.expire(AssembleUtils.sendMessageUtils(sms.getSmsPhone(),smsVM.getSmsType()), 1 * 60);
+        int type = smsMapper.insert(sms);
         if (type > 0) {
-            SendSmsResponse response = SmsDemo.sendSms(smsVM.getSmsType(), smsVM);
+            SendSmsResponse response = SmsDemo.sendSms(smsVM.getSmsType(), sms);
             if ("OK".equals(response.getCode()) && "OK".equals(response.getMessage())) {
                 return ReturnType.ReturnType(type, ResultEnum.SMS_SEND_ERROR);
             } else {

@@ -10,7 +10,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.mettre.account.enum_.SmsTypeEnum;
-import com.mettre.account.pojoVM.SmsVM;
+import com.mettre.account.pojo.Sms;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class SmsDemo {
     public static void main(String[] args) throws ClientException, InterruptedException {
 
         //发短信
-        SendSmsResponse response = sendSms(SmsTypeEnum.REGISTER, new SmsVM());
+        SendSmsResponse response = sendSms(SmsTypeEnum.REGISTER, new Sms());
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());
@@ -52,7 +52,7 @@ public class SmsDemo {
 
         //查明细
         if (response.getCode() != null && response.getCode().equals("OK")) {
-            QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId(), new SmsVM());
+            QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId(), new Sms());
             System.out.println("短信明细查询接口返回数据----------------");
             System.out.println("Code=" + querySendDetailsResponse.getCode());
             System.out.println("Message=" + querySendDetailsResponse.getMessage());
@@ -73,7 +73,7 @@ public class SmsDemo {
         }
     }
 
-    public static SendSmsResponse sendSms(SmsTypeEnum captchaEnum, SmsVM sms) throws ClientException {
+    public static SendSmsResponse sendSms(SmsTypeEnum captchaEnum, Sms sms) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -110,7 +110,7 @@ public class SmsDemo {
     }
 
 
-    public static QuerySendDetailsResponse querySendDetails(String bizId, SmsVM captcha) throws ClientException {
+    public static QuerySendDetailsResponse querySendDetails(String bizId, Sms captcha) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");

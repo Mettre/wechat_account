@@ -22,6 +22,7 @@ public enum ResultEnum {
     REGISTERED("E108", "该手机号已注册"),
     MODIFYUSERINFOERROR("E115", "个人修改信息失败"),
     REGISTERERROR("E116", "注册失败"),
+    FORGET_PASSWORD("E118", "密码修改失败"),
     GENBDERERROY("E117", "性别不能为空"),
 
 

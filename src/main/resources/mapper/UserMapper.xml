@@ -182,7 +182,14 @@
       age = #{age,jdbcType=INTEGER},
       background_wall = #{backgroundWall,jdbcType=VARCHAR},
       creation_time = #{creationTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+    <update id="forgetPassword" parameterType="com.mettre.account.pojo.User">
+    update wc_user
+    set password = #{password,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where phone = #{phone,jdbcType=VARCHAR}
   </update>
 </mapper>

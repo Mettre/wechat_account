@@ -149,6 +149,19 @@
             <version>1.1.0</version>
         </dependency>
 
+        <!-- Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.4.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20160810</version>
+    </dependency>
+
         <!--&lt;!&ndash;权限 密码加密&ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

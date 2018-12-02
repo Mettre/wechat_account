@@ -14,8 +14,4 @@ public class SmsVM  {
     @NotBlank(message = "发送手机号不能为空")
     @ApiModelProperty(value = "手机号")
     private String smsPhone;
-
-    @NotBlank(message = "短信内容不能为空")
-    @ApiModelProperty(value = "验证码")
-    private String smsContent;
 }

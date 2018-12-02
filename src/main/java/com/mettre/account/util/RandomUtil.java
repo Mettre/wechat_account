@@ -56,12 +56,16 @@ public final class RandomUtil {
     }
 
     public static String generateVisitorNumber() {
-        return "V" + DateUtil.getCurrentTimeStr() + RandomStringUtils.randomNumeric(4);
+        return "V" + System.currentTimeMillis() + RandomStringUtils.randomNumeric(4);
     }
 
 
     public static String generateUserId() {
         return DateUtil.getCurrentTimeStr() + RandomStringUtils.randomNumeric(5);
+    }
+
+    public static String generateNickName() {
+        return "u" + System.currentTimeMillis() + RandomStringUtils.randomNumeric(5);
     }
 
     public static String generateFileKey() {

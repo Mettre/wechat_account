@@ -25,10 +25,34 @@ spring:
         minEvictableIdleTimeMillis: 300000
 
 
+
+    # Redis
+    redis:
+        host: 127.0.0.1
+        password:
+        max-active: 100
+        max-idle: 10
+        max-wait: 100000
+        # 数据库索引 默认0
+        database: 0
+        port: 6379
+        timeout: 3000
+
+
       # 文件大小上传配置
     multipart:
         max-file-size: 5Mb
         max-request-size: 5Mb
+
+
+   # token过期时间（分钟）
+    tokenExpireTime: 4320
+    # 用户选择保存登录状态对应token过期时间（天）
+    saveLoginTime: 7
+    # 限制用户登陆错误次数（次）
+    loginTimeLimit: 10
+    # 错误超过次数后多少分钟后才能继续登录（分钟）
+    loginAfterTime: 10
 
 server:
     port: 8766 #启动端口

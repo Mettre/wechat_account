@@ -2,6 +2,9 @@ package com.mettre.account.pojo;
 
 import cn.hutool.core.util.StrUtil;
 import com.mettre.account.enum_.GenderEnum;
+import com.mettre.account.pojoVM.ForgetPasswordVM;
+import com.mettre.account.pojoVM.ModifyPasswordVM;
+import com.mettre.account.pojoVM.UserRegisterVM;
 import com.mettre.account.pojoVM.UserVM;
 import com.mettre.account.util.RandomUtil;
 import lombok.Data;
@@ -46,13 +49,25 @@ public class User {
         this.signature = userVM.getSignature();
         this.gender = userVM.getGender();
         this.headAvatar = userVM.getHeadAvatar();
-        this.password = StrUtil.isBlank(userVM.getPassword()) ? null : new BCryptPasswordEncoder().encode(userVM.getPassword().trim());
         this.city = userVM.getCity();
         this.age = userVM.getAge();
         this.backgroundWall = userVM.getBackgroundWall();
         this.updateTime = new Date();
     }
 
+    //忘记密码
+    public User(ForgetPasswordVM forgetPasswordVM) {
+        this.password = StrUtil.isBlank(forgetPasswordVM.getPassword()) ? null : new BCryptPasswordEncoder().encode(forgetPasswordVM.getPassword().trim());
+        this.phone = forgetPasswordVM.getPhone();
+        this.updateTime = new Date();
+    }
+
+    //修改密码
+    public User(ModifyPasswordVM modifyPasswordVM) {
+        this.password = StrUtil.isBlank(modifyPasswordVM.getNewPassword()) ? null : new BCryptPasswordEncoder().encode(modifyPasswordVM.getNewPassword().trim());
+        this.phone = modifyPasswordVM.getPhone();
+        this.updateTime = new Date();
+    }
 
     //个人信息没有密码
     public User(User user) {
@@ -69,17 +84,11 @@ public class User {
     }
 
     //注册
-    public User(UserVM userVM) {
+    public User(UserRegisterVM userVM) {
         this.userId = RandomUtil.generateUserId();
-        this.userName = userVM.getUserName();
-        this.signature = userVM.getSignature();
-        this.gender = userVM.getGender();
-        this.headAvatar = userVM.getHeadAvatar();
+        this.userName = RandomUtil.generateNickName();
         this.password = new BCryptPasswordEncoder().encode(userVM.getPassword().trim());
         this.phone = userVM.getPhone();
-        this.city = userVM.getCity();
-        this.age = userVM.getAge();
-        this.backgroundWall = userVM.getBackgroundWall();
         this.creationTime = new Date();
         this.updateTime = new Date();
     }
