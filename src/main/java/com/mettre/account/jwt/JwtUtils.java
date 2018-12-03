@@ -29,7 +29,7 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
 
-        return new AccessToken(jwt, "basic", tokenExpireTime);
+        return new AccessToken(jwt, "basic", tokenExpireTime,user.getUserId());
     }
 
     /**

@@ -29,9 +29,8 @@ public class AccountApplication {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new JwtFilter());
         List<String> urlPatterns = new ArrayList<String>();
+        urlPatterns.add("/loginEd/*");
         urlPatterns.add("/api/user/loginEd/*");
-        urlPatterns.add("/api/delivery/loginEd/*");
-        urlPatterns.add("/api/shop/loginEd/*");
         registrationBean.setUrlPatterns(urlPatterns);
         return registrationBean;
     }

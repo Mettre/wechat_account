@@ -3,10 +3,13 @@ package com.mettre.account.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
+import com.mettre.account.config.LogHttpServletRequestWrapper;
 import com.mettre.account.constant.CommonConstant;
 import com.mettre.account.util.BigDecimalUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.crypto.SecretKey;
@@ -21,6 +24,15 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 public class JwtFilter extends GenericFilterBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+
+    @Override
+    public void destroy() {
+        logger.info("哈哈哈哈哈哈哈 --  destroy");
+        SecurityContextStore.clearContext();
+        super.destroy();
+    }
 
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException, ServletException {
@@ -39,8 +51,10 @@ public class JwtFilter extends GenericFilterBean {
                 //解密token，拿到里面的对象claims
                 final Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody();
                 //将对象传递给下一个请求
+                AccessToken accessToken = new AccessToken(claims.getSubject());
+                SecurityContextStore.setContext(accessToken);
                 request.setAttribute(CommonConstant.CLAIMS, claims);
-                result.setCode(CommonConstant.ERROR);//未知错误
+//                result.setCode(CommonConstant.ERROR);//未知错误
             } catch (Exception e) {
                 result = new ResultUtil<Object>().setAuthenticationFailureMsg();
             }

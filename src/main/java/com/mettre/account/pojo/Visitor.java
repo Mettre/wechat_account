@@ -21,9 +21,9 @@ public class Visitor {
     public Visitor() {
     }
 
-    public Visitor(VisitorVM visitorVM) {
+    public Visitor(VisitorVM visitorVM,String userId) {
         this.creationTime = new Date();
-        this.userId = visitorVM.getUserId();
+        this.userId = userId;
         this.visitorsUesr = visitorVM.getVisitorsUesr();
     }
 }

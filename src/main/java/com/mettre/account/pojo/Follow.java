@@ -37,8 +37,8 @@ public class Follow {
 
 
     //新增关注
-    public Follow(FollowVM followVM) {
-        this.userId = followVM.getUserId();
+    public Follow(FollowVM followVM,String userId) {
+        this.userId = userId;
         this.followedUser = followVM.getFollowedUser();
         this.status = true;
         this.creationTime = new Date();

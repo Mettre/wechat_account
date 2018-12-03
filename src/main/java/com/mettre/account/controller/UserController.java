@@ -3,6 +3,7 @@ package com.mettre.account.controller;
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
 import com.mettre.account.feign.TestClient;
+import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.pojoVM.ForgetPasswordVM;
 import com.mettre.account.pojoVM.ModifyPasswordVM;
 import com.mettre.account.pojoVM.UserRegisterVM;
@@ -40,15 +41,17 @@ public class UserController {
         return new ResultUtil<>().setData(userService.selectByPhoneAndPassword(phone, password));
     }
 
-    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/loginEd/getUserInfo", method = RequestMethod.GET)
     @ApiOperation(value = "获取个人信息")
-    public Result<Object> findUserInfo(@RequestParam String userId) {
+    public Result<Object> findUserInfo() {
+        String userId = SecurityContextStore.getContext().getUserId();
         return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
     }
 
-    @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/modifyUserInfo", method = RequestMethod.POST)
     @ApiOperation(value = "修改个人信息")
-    public Result<Object> modifyUserInfo(@RequestBody UserVM userVM, @RequestParam String userId) {
+    public Result<Object> modifyUserInfo(@RequestBody UserVM userVM) {
+        String userId = SecurityContextStore.getContext().getUserId();
         return new ResultUtil<>().setData(userService.updateByPrimaryKeySelective(userVM, userId));
     }
 

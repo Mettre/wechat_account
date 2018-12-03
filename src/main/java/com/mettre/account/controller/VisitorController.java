@@ -3,6 +3,7 @@ package com.mettre.account.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
+import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.pojo.BasePage;
 import com.mettre.account.pojo.Follow;
 import com.mettre.account.pojo.Visitor;
@@ -24,16 +25,18 @@ public class VisitorController {
     @Autowired
     public VisitorService visitorService;
 
-    @RequestMapping(value = "/addVisitor", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/addVisitor", method = RequestMethod.POST)
     @ApiOperation(value = "空间增加访问")
     public Result<Object> insert(@Valid @RequestBody VisitorVM visitorVM) {
-        visitorService.insert(new Visitor(visitorVM));
+        String userId = SecurityContextStore.getContext().getUserId();
+        visitorService.insert(new Visitor(visitorVM,userId));
         return new ResultUtil<>().setSuccess();
     }
 
-    @RequestMapping(value = "/myVisitorList", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/myVisitorList", method = RequestMethod.POST)
     @ApiOperation(value = "我的空间访问记录")
-    public Result<Object> myVisitorList(@RequestBody BasePage basePage, @RequestParam String visitorsUesr) {
+    public Result<Object> myVisitorList(@RequestBody BasePage basePage) {
+        String visitorsUesr = SecurityContextStore.getContext().getUserId();
         Page<Visitor> page = new Page<>(basePage.getPage(), basePage.getSize());
         return new ResultUtil<>().setData(visitorService.myVisitorPageVo(page, visitorsUesr));
     }
