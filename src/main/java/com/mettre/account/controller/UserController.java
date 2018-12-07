@@ -48,6 +48,12 @@ public class UserController {
         return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
     }
 
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    @ApiOperation(value = "根据userId查询个人信息")
+    public Result<Object> findUserInfoWithUserId(@RequestParam String userId) {
+        return new ResultUtil<>().setData(userService.selectByPrimaryKey(userId));
+    }
+
     @RequestMapping(value = "/loginEd/modifyUserInfo", method = RequestMethod.POST)
     @ApiOperation(value = "修改个人信息")
     public Result<Object> modifyUserInfo(@RequestBody UserVM userVM) {
