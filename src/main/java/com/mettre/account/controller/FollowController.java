@@ -39,12 +39,19 @@ public class FollowController {
         return new ResultUtil<>().setSuccess();
     }
 
-    @RequestMapping(value = "/loginEd/myFriendsList", method = RequestMethod.POST)
-    @ApiOperation(value = "我的好友列表")
+    @RequestMapping(value = "/loginEd/myFriendsPo", method = RequestMethod.POST)
+    @ApiOperation(value = "我的好友列表分页")
     public Result<Object> myFriendsPageVo(@RequestBody BasePage basePage) {
         String userId = SecurityContextStore.getContext().getUserId();
         Page<Follow> page = new Page<>(basePage.getPage(), basePage.getSize());
         return new ResultUtil<>().setData(followService.myFriendsPageVo(page, userId));
+    }
+
+    @RequestMapping(value = "/loginEd/myFriendsList", method = RequestMethod.GET)
+    @ApiOperation(value = "我的好友列表")
+    public Result<Object> myFriendsList() {
+        String userId = SecurityContextStore.getContext().getUserId();
+        return new ResultUtil<>().setData(followService.myFriendsList(userId));
     }
 
     @RequestMapping(value = "/loginEd/myFollowList", method = RequestMethod.POST)

@@ -3,6 +3,8 @@ package com.mettre.account.base;
 import com.mettre.account.constant.CommonConstant;
 import com.mettre.account.enum_.ResultEnum;
 
+import java.util.List;
+
 /**
  * @author Exrick
  */

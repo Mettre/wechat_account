@@ -1,7 +1,9 @@
 package com.mettre.account.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mettre.account.base.ResultList;
 import com.mettre.account.pojo.Follow;
+import com.mettre.account.pojo.Friends;
 import com.mettre.account.pojoVM.FollowVM;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,5 +32,7 @@ public interface FollowService {
     Page<Follow> myFansPageVo(Page<Follow> page, String userId);
 
     Page<Follow> myFriendsPageVo(Page<Follow> page, String userId);
+
+    ResultList myFriendsList(String userId);
 
 }

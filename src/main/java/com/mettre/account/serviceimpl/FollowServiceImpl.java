@@ -2,12 +2,14 @@ package com.mettre.account.serviceimpl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mettre.account.base.ResultList;
 import com.mettre.account.base.ReturnType;
 import com.mettre.account.enum_.ResultEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.mapper.FollowMapper;
 import com.mettre.account.pojo.Follow;
+import com.mettre.account.pojo.Friends;
 import com.mettre.account.pojoVM.FollowVM;
 import com.mettre.account.service.FollowService;
 import com.mettre.account.service.UserService;
@@ -36,16 +38,16 @@ public class FollowServiceImpl implements FollowService {
     public int insert(FollowVM followVM) {
         String userId = SecurityContextStore.getContext().getUserId();
         int type = 0;
-        Follow follow = followMapper.findWhetherFollow(new Follow(followVM,userId));
+        Follow follow = followMapper.findWhetherFollow(new Follow(followVM, userId));
         if (follow != null) {
             if (follow.getStatus()) {
                 throw new CustomerException(ResultEnum.HAVEDFOLLOWED);
             }
-            type = followMapper.addFollow(new Follow(followVM,userId));
+            type = followMapper.addFollow(new Follow(followVM, userId));
         } else {
             userService.selectByPrimaryKey(userId);
             userService.selectByPrimaryKey(followVM.getFollowedUser());
-            type = followMapper.insert(new Follow(followVM,userId));
+            type = followMapper.insert(new Follow(followVM, userId));
         }
 
         return ReturnType.ReturnType(type, ResultEnum.FOLLOWERROR);
@@ -75,18 +77,18 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public int cancelFollow(FollowVM followVM) {
         String userId = SecurityContextStore.getContext().getUserId();
-        Follow follow = followMapper.findWhetherFollow(new Follow(followVM,userId));
+        Follow follow = followMapper.findWhetherFollow(new Follow(followVM, userId));
         if (follow == null) {
             throw new CustomerException(ResultEnum.CANCELFOLLOW);
         }
-        int type = followMapper.cancelFollow(new Follow(followVM,userId));
+        int type = followMapper.cancelFollow(new Follow(followVM, userId));
         return ReturnType.ReturnType(type, ResultEnum.CANCELFOLLOW);
     }
 
     @Override
     public Follow findWhetherFollow(FollowVM followVM) {
         String userId = SecurityContextStore.getContext().getUserId();
-        return followMapper.findWhetherFollow(new Follow(followVM,userId));
+        return followMapper.findWhetherFollow(new Follow(followVM, userId));
     }
 
     @Override
@@ -118,5 +120,13 @@ public class FollowServiceImpl implements FollowService {
         List<Follow> followList = (List<Follow>) followMapper.myFriendsPageVo(page, userId);
         page = page.setRecords(followList);
         return page;
+    }
+
+    @Override
+    public ResultList myFriendsList(String userId) {
+        List<Friends> followList = (List<Friends>) followMapper.myFriendsList(userId);
+        ResultList resultList = new ResultList();
+        resultList.setList(followList);
+        return resultList;
     }
 }

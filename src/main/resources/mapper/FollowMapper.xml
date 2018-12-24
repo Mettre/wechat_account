@@ -10,6 +10,14 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="BaseResultMap2" type="com.mettre.account.pojo.Friends">
+        <id column="follow_id" property="followId" jdbcType="BIGINT"/>
+        <result column="my_userId" property="myUserId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="head_avatar" property="headAvatar" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
 
     <!--我的粉丝列表  识别互关-->
     <resultMap id="BaseResultMap5" type="com.mettre.account.pojo.Follow">
@@ -32,6 +40,10 @@
 
     <sql id="Base_Column">
     follow_id, user_id, followed_user, status, creation_time, update_time
+  </sql>
+
+    <sql id="Base_Column_List2">
+    wc_follow.follow_id,wc_follow.user_id as my_userId,wc_user.user_id, wc_user.user_name,wc_user.head_avatar,wc_follow.update_time
   </sql>
 
     <!--我的好友列表-->
@@ -204,6 +216,21 @@
         where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
         and wc_follow.status = true
         order by wc_follow.update_time asc
+    </select>
+
+    <!--我的好友列表   互粉既是好友-->
+    <select id="myFriendsList" resultMap="BaseResultMap2" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List2"/>
+        FROM wc_follow
+        left join wc_user
+        on wc_follow.followed_user = wc_user.user_id
+        inner join wc_follow as wc_follow2
+        on wc_follow.user_id = wc_follow2.followed_user
+        and wc_follow.followed_user = wc_follow2.user_id
+        and wc_follow2.status = true
+        where wc_follow.user_id = #{userId,jdbcType=VARCHAR}
+        and wc_follow.status = true
     </select>
 
 
