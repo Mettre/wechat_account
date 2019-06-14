@@ -35,21 +35,21 @@ public class SmsController {
 
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     @ApiOperation(value = "发送短信")
-    public Result<Object> addFollow(@Valid @RequestBody SmsVM smsVM) throws ClientException {
+    public Result<Object> sendMessage(@Valid @RequestBody SmsVM smsVM) throws ClientException {
         smsService.insert(smsVM);
         return new ResultUtil<>().setSuccess();
     }
 
     @RequestMapping(value = "/sendMessagePageVo", method = RequestMethod.POST)
     @ApiOperation(value = "查询发送短信记录")
-    public Result<Object> myVisitorList(@Valid @RequestBody SmsSearchVm smsVM) {
+    public Result<Object> messageSendList(@Valid @RequestBody SmsSearchVm smsVM) {
         Page<Sms> page = new Page<>(smsVM.getPage(), smsVM.getSize());
         return new ResultUtil<>().setData(smsService.findSmsListPageVo(page, smsVM));
     }
 
     @RequestMapping(value = "/deleteMessage", method = RequestMethod.GET)
     @ApiOperation(value = "删除短信记录")
-    public Result<Object> myVisitorList(@RequestParam Long smsId) {
+    public Result<Object> deleteMessageWithSmsId(@RequestParam Long smsId) {
         smsService.deleteByPrimaryKey(smsId);
         return new ResultUtil<>().setSuccess();
     }
