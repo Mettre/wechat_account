@@ -7,6 +7,7 @@ import com.mettre.account.enum_.SmsTypeEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.jwt.AccessToken;
 import com.mettre.account.jwt.JwtUtils;
+import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.mapper.UserMapper;
 import com.mettre.account.pojo.User;
 import com.mettre.account.pojoVM.ForgetPasswordVM;
@@ -120,19 +121,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int modifyPassword(ModifyPasswordVM modifyPasswordVM) {
-        String code = redisService.get(AssembleUtils.sendMessageUtils(modifyPasswordVM.getPhone(),SmsTypeEnum.MODIFY_PASSWORD));
-        if (StrUtil.isBlank(code)) {
-            throw new CustomerException("验证码已过期，请重新获取");
-        }
-        if (!modifyPasswordVM.getCaptchaCode().toLowerCase().equals(code.toLowerCase())) {
-            throw new CustomerException("验证码不正确");
-        }
-        User user = UserMapper.selectByPhone(modifyPasswordVM.getPhone());
+
+        String userId = SecurityContextStore.getContext().getUserId();
+        User user = UserMapper.selectByPrimaryKey(userId);
         if (user==null||!new BCryptPasswordEncoder().matches(modifyPasswordVM.getOldPassword(), user.getPassword())) {
-            throw new CustomerException("老密码错误");
+            throw new CustomerException("老密码输入错误！");
         }
 
-        int type = UserMapper.forgetPassword(new User(modifyPasswordVM));
+        int type = UserMapper.modifyPassword(new User(modifyPasswordVM,userId));
         return ReturnType.ReturnType(type, ResultEnum.FORGET_PASSWORD);
     }
 }

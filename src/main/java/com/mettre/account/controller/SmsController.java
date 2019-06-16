@@ -36,8 +36,7 @@ public class SmsController {
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     @ApiOperation(value = "发送短信")
     public Result<Object> addFollow(@Valid @RequestBody SmsVM smsVM) throws ClientException {
-        smsService.insert(smsVM);
-        return new ResultUtil<>().setSuccess();
+        return new ResultUtil<>().setData(smsService.sendMessage(smsVM));
     }
 
     @RequestMapping(value = "/sendMessagePageVo", method = RequestMethod.POST)

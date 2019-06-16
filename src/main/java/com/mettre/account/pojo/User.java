@@ -63,9 +63,9 @@ public class User {
     }
 
     //修改密码
-    public User(ModifyPasswordVM modifyPasswordVM) {
+    public User(ModifyPasswordVM modifyPasswordVM, String userId) {
+        this.userId = userId;
         this.password = StrUtil.isBlank(modifyPasswordVM.getNewPassword()) ? null : new BCryptPasswordEncoder().encode(modifyPasswordVM.getNewPassword().trim());
-        this.phone = modifyPasswordVM.getPhone();
         this.updateTime = new Date();
     }
 

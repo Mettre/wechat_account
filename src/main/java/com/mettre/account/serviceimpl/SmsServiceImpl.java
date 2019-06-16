@@ -55,29 +55,31 @@ public class SmsServiceImpl implements SmsService {
         }
 
         User user = userMapper.selectByPhone(smsVM.getSmsPhone());
-        switch (smsVM.getSmsType()){
+        switch (smsVM.getSmsType()) {
             case REGISTER:
-                if(user!=null)
+                if (user != null)
                     throw new CustomerException(ResultEnum.REGISTERED);
                 break;
             case FORGET_PASSWORD:
             case MODIFY_PASSWORD:
-                if(user==null)
+                if (user == null)
                     throw new CustomerException(ResultEnum.UNREGISTER);
                 break;
         }
-        String code =new CreateVerifyCode().randomInteger(4);
-        Sms sms = new Sms(smsVM,code);
-        redisService.set(AssembleUtils.sendMessageUtils(sms.getSmsPhone(),smsVM.getSmsType()), code);
-        redisService.expire(AssembleUtils.sendMessageUtils(sms.getSmsPhone(),smsVM.getSmsType()), 1 * 60);
+        String code = new CreateVerifyCode().randomInteger(4);
+        Sms sms = new Sms(smsVM, code);
+        redisService.set(AssembleUtils.sendMessageUtils(sms.getSmsPhone(), smsVM.getSmsType()), code);
+        redisService.expire(AssembleUtils.sendMessageUtils(sms.getSmsPhone(), smsVM.getSmsType()), 1 * 60);
         int type = smsMapper.insert(sms);
         if (type > 0) {
+
             SendSmsResponse response = SmsDemo.sendSms(smsVM.getSmsType(), sms);
             if ("OK".equals(response.getCode()) && "OK".equals(response.getMessage())) {
                 return ReturnType.ReturnType(type, ResultEnum.SMS_SEND_ERROR);
             } else {
                 return ReturnType.ReturnType(0, ResultEnum.SMS_SEND_ERROR);
             }
+
         } else {
             return ReturnType.ReturnType(0, ResultEnum.SMS_SEND_ERROR);
         }
@@ -111,5 +113,36 @@ public class SmsServiceImpl implements SmsService {
         List<Sms> visitorList = (List<Sms>) smsMapper.findSmsListPageVo(page, smsSearchVm);
         page = page.setRecords(visitorList);
         return page;
+    }
+
+
+    @Override
+    public String sendMessage(SmsVM smsVM) throws ClientException {
+        if (null == smsVM.getSmsType()) {
+            throw new CustomerException("短信类型不能为空");
+        }
+
+        User user = userMapper.selectByPhone(smsVM.getSmsPhone());
+        switch (smsVM.getSmsType()) {
+            case REGISTER:
+                if (user != null)
+                    throw new CustomerException(ResultEnum.REGISTERED);
+                break;
+            case FORGET_PASSWORD:
+            case MODIFY_PASSWORD:
+                if (user == null)
+                    throw new CustomerException(ResultEnum.UNREGISTER);
+                break;
+        }
+        String code = new CreateVerifyCode().randomInteger(4);
+        Sms sms = new Sms(smsVM, code);
+        redisService.set(AssembleUtils.sendMessageUtils(sms.getSmsPhone(), smsVM.getSmsType()), code);
+        redisService.expire(AssembleUtils.sendMessageUtils(sms.getSmsPhone(), smsVM.getSmsType()), 1 * 60);
+        int type = smsMapper.insert(sms);
+        if (type > 0) {
+            return code;
+        } else {
+            throw new CustomerException(ResultEnum.SMS_SEND_ERROR);
+        }
     }
 }

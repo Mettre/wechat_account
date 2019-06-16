@@ -1,8 +1,6 @@
 package com.mettre.account.mapper;
 
 import com.mettre.account.pojo.User;
-import com.mettre.account.pojoVM.ForgetPasswordVM;
-import com.mettre.account.pojoVM.ModifyPasswordVM;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -26,4 +24,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     int forgetPassword(User record);
+
+    int modifyPassword(User user);
 }

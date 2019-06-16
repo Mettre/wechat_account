@@ -58,19 +58,22 @@ public class UserController {
     @ApiOperation(value = "修改个人信息")
     public Result<Object> modifyUserInfo(@RequestBody UserVM userVM) {
         String userId = SecurityContextStore.getContext().getUserId();
-        return new ResultUtil<>().setData(userService.updateByPrimaryKeySelective(userVM, userId));
+        userService.updateByPrimaryKeySelective(userVM, userId);
+        return new ResultUtil<>().setSuccess();
     }
 
     @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
     @ApiOperation(value = "忘记密码")
     public Result<Object> forgetPassword(@Valid @RequestBody ForgetPasswordVM userVM) {
-        return new ResultUtil<>().setData(userService.forgetPassword(userVM));
+        userService.forgetPassword(userVM);
+        return new ResultUtil<>().setSuccess();
     }
 
-    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/modifyPassword", method = RequestMethod.POST)
     @ApiOperation(value = "修改密码")
     public Result<Object> modifyPassword(@Valid @RequestBody ModifyPasswordVM userVM) {
-        return new ResultUtil<>().setData(userService.modifyPassword(userVM));
+        userService.modifyPassword(userVM);
+        return new ResultUtil<>().setSuccess();
     }
 
     @GetMapping(value = "/user/hello")

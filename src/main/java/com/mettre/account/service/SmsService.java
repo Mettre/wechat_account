@@ -21,4 +21,6 @@ public interface SmsService {
     int updateByPrimaryKey(Sms record);
 
     Page<Sms> findSmsListPageVo(Page<Sms> page, SmsSearchVm smsSearchVm);
+
+    String sendMessage(SmsVM smsVM) throws ClientException;
 }
