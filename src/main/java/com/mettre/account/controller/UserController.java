@@ -67,7 +67,7 @@ public class UserController {
         return new ResultUtil<>().setData(userService.forgetPassword(userVM));
     }
 
-    @RequestMapping(value = "/modifyPassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/modifyPassword", method = RequestMethod.POST)
     @ApiOperation(value = "修改密码")
     public Result<Object> modifyPassword(@Valid @RequestBody ModifyPasswordVM userVM) {
         return new ResultUtil<>().setData(userService.modifyPassword(userVM));
