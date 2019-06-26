@@ -26,6 +26,8 @@ public class Follow {
 
     private String followedUserName;
 
+    private String headAvatar;
+
     @JsonIgnore
     private String userId2;//判断是否互关（为空则不互关）
 
@@ -37,7 +39,7 @@ public class Follow {
 
 
     //新增关注
-    public Follow(FollowVM followVM,String userId) {
+    public Follow(FollowVM followVM, String userId) {
         this.userId = userId;
         this.followedUser = followVM.getFollowedUser();
         this.status = true;

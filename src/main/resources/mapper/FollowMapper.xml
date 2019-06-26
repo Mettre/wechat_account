@@ -35,6 +35,7 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="user_name" property="followedUserName" jdbcType="VARCHAR"/>
         <result column="user_id2" property="userId2" jdbcType="VARCHAR"/>
+        <result column="head_avatar" property="headAvatar" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -48,17 +49,17 @@
 
     <!--我的好友列表-->
     <sql id="Base_Column_List">
-    wc_follow.follow_id,wc_follow2.followed_user,wc_user.user_name,wc_follow.update_time
+    wc_follow.follow_id,wc_follow2.followed_user,wc_user.user_name,wc_follow.update_time,head_avatar
   </sql>
 
     <!--我的粉丝列表  识别互关-->
     <sql id="Base_Column_List5">
-    wc_follow.follow_id, wc_follow.user_id, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time
+    wc_follow.follow_id, wc_follow.user_id, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time,head_avatar
   </sql>
 
     <!--我的关注列表  识别互关-->
     <sql id="Base_Column_List4">
-    wc_follow.follow_id, wc_follow.followed_user, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time
+    wc_follow.follow_id, wc_follow.followed_user, wc_user.user_name , wc_follow2.user_id user_id2,wc_follow.update_time,head_avatar
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -251,7 +252,7 @@
     </select>
 
     <!--我的粉丝列表  识别互关-->
-    <select id="myFansPageVo" resultMap="BaseResultMap5">
+    <select id="myFansPageVo" resultMap="BaseResultMap4">
         SELECT
         <include refid="Base_Column_List5"></include>
         FROM wc_follow

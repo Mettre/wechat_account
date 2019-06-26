@@ -17,7 +17,7 @@ public interface VisitorService {
 
     int updateByPrimaryKey(Visitor record);
 
-    Page<Visitor> myVisitorPageVo(Page<Visitor> page, String visitorsUesr);
+    Page<Visitor> myVisitorPageVo(Page<Visitor> page, String visitorsUser);
 
     int deleteAllVisitorFromVisitorId(Long visitorId);
 

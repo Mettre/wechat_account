@@ -5,12 +5,13 @@
         <id column="visitor_id" property="visitorId" jdbcType="BIGINT"/>
         <result column="creation_time" property="creationTime" jdbcType="TIMESTAMP"/>
         <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="head_avatar" property="headAvatar" jdbcType="VARCHAR"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="visitors_uesr" property="visitorsUesr" jdbcType="VARCHAR"/>
+        <result column="visitors_uesr" property="visitorsUser" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-    wc_visitor.visitor_id, wc_visitor.creation_time, wc_visitor.user_id,user_name
+    wc_visitor.visitor_id, wc_visitor.creation_time, wc_visitor.user_id,wc_user.user_name,head_avatar
   </sql>
 
     <sql id="Base_Column">
@@ -44,14 +45,15 @@
     <delete id="deleteAllVisitor" parameterType="java.lang.String">
     delete from wc_visitor
     where user_id = #{userId,jdbcType=VARCHAR}
-    and visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR}
+    and visitors_uesr = #{visitorsUser,jdbcType=VARCHAR}
   </delete>
 
+    <!--插入访客记录-->
     <insert id="insert" parameterType="com.mettre.account.pojo.Visitor">
     insert into wc_visitor (visitor_id, creation_time, user_id, 
       visitors_uesr)
     values (#{visitorId,jdbcType=BIGINT}, #{creationTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR},
-      #{visitorsUesr,jdbcType=VARCHAR})
+      #{visitorsUser,jdbcType=VARCHAR})
   </insert>
 
     <insert id="insertSelective" parameterType="com.mettre.account.pojo.Visitor">
@@ -66,7 +68,7 @@
             <if test="userId != null">
                 user_id,
             </if>
-            <if test="visitorsUesr != null">
+            <if test="visitorsUser != null">
                 visitors_uesr,
             </if>
         </trim>
@@ -80,8 +82,8 @@
             <if test="userId != null">
                 #{userId,jdbcType=VARCHAR},
             </if>
-            <if test="visitorsUesr != null">
-                #{visitorsUesr,jdbcType=VARCHAR},
+            <if test="visitorsUser != null">
+                #{visitorsUser,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -95,8 +97,8 @@
             <if test="userId != null">
                 user_id = #{userId,jdbcType=VARCHAR},
             </if>
-            <if test="visitorsUesr != null">
-                visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR},
+            <if test="visitorsUser != null">
+                visitors_uesr = #{visitorsUser,jdbcType=VARCHAR},
             </if>
         </set>
         where visitor_id = #{visitorId,jdbcType=BIGINT}
@@ -106,7 +108,7 @@
     update wc_visitor
     set creation_time = #{creationTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=VARCHAR},
-      visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR}
+      visitors_uesr = #{visitorsUser,jdbcType=VARCHAR}
     where visitor_id = #{visitorId,jdbcType=BIGINT}
   </update>
 
@@ -115,7 +117,7 @@
         select
         <include refid="Base_Column_List"/>
         from
-        (SELECT * FROM wc_visitor where visitors_uesr = #{visitorsUesr,jdbcType=VARCHAR} order by creation_time desc) as
+        (SELECT * FROM wc_visitor where visitors_uesr = #{visitorsUser,jdbcType=VARCHAR} order by creation_time desc) as
         wc_visitor
         left join wc_user
         on wc_visitor.user_id = wc_user.user_id

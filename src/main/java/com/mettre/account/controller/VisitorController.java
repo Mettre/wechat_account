@@ -26,24 +26,24 @@ public class VisitorController {
     public VisitorService visitorService;
 
     @RequestMapping(value = "/loginEd/addVisitor", method = RequestMethod.POST)
-    @ApiOperation(value = "空间增加访问")
+    @ApiOperation(value = "访问别人的空间")
     public Result<Object> insert(@Valid @RequestBody VisitorVM visitorVM) {
         String userId = SecurityContextStore.getContext().getUserId();
-        visitorService.insert(new Visitor(visitorVM,userId));
+        visitorService.insert(new Visitor(visitorVM, userId));
         return new ResultUtil<>().setSuccess();
     }
 
     @RequestMapping(value = "/loginEd/myVisitorList", method = RequestMethod.POST)
     @ApiOperation(value = "我的空间访问记录")
     public Result<Object> myVisitorList(@RequestBody BasePage basePage) {
-        String visitorsUesr = SecurityContextStore.getContext().getUserId();
+        String visitorsUser = SecurityContextStore.getContext().getUserId();
         Page<Visitor> page = new Page<>(basePage.getPage(), basePage.getSize());
-        return new ResultUtil<>().setData(visitorService.myVisitorPageVo(page, visitorsUesr));
+        return new ResultUtil<>().setData(visitorService.myVisitorPageVo(page, visitorsUser));
     }
 
-    @RequestMapping(value = "/deletePersonalVisitor", method = RequestMethod.POST)
-    @ApiOperation(value = "删除空间访问某个人记录")
-    public Result<Object> deletePersonalVisitor(@RequestParam Long visitorId) {
+    @RequestMapping(value = "/loginEd/deletePersonalVisitor", method = RequestMethod.POST)
+    @ApiOperation(value = "主人删除空间访问某个人记录")
+    public Result<Object> deletePersonalVisitor(@RequestParam(value = "visitorId", required = false) Long visitorId) {
         visitorService.deleteAllVisitorFromVisitorId(visitorId);
         return new ResultUtil<>().setSuccess();
     }

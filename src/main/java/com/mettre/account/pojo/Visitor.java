@@ -12,11 +12,13 @@ public class Visitor {
 
     private Date creationTime;
 
-    private String userId;
+    private String userId;//访问者
 
-    private String visitorsUesr;
+    private String visitorsUser;//被访问者
 
     private String userName;
+
+    private String headAvatar;
 
     public Visitor() {
     }
@@ -24,6 +26,12 @@ public class Visitor {
     public Visitor(VisitorVM visitorVM,String userId) {
         this.creationTime = new Date();
         this.userId = userId;
-        this.visitorsUesr = visitorVM.getVisitorsUesr();
+        this.visitorsUser = visitorVM.getVisitorsUesr();
+    }
+
+    public Visitor(String visitorsUser,String userId) {
+        this.creationTime = new Date();
+        this.userId = userId;
+        this.visitorsUser = visitorsUser;
     }
 }

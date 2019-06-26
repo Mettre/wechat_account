@@ -22,9 +22,9 @@ public interface VisitorMapper {
 
     int updateByPrimaryKey(Visitor record);
 
-    List<Visitor> myVisitorPageVo(Page<Visitor> page, @Param(value = "visitorsUesr") String visitorsUesr);
+    List<Visitor> myVisitorPageVo(Page<Visitor> page, @Param(value = "visitorsUser") String visitorsUser);
 
-    int deleteAllVisitor(@Param(value = "userId") String userId, @Param(value = "visitorsUesr") String visitorsUesr);
+    int deleteAllVisitor(@Param(value = "userId") String userId, @Param(value = "visitorsUser") String visitorsUser);
 
     int deleteAllVisitorFromVisitorId(Long visitorId);
 }

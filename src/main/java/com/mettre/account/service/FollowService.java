@@ -3,11 +3,7 @@ package com.mettre.account.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mettre.account.base.ResultList;
 import com.mettre.account.pojo.Follow;
-import com.mettre.account.pojo.Friends;
 import com.mettre.account.pojoVM.FollowVM;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface FollowService {
 
