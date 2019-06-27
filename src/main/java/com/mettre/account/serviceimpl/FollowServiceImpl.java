@@ -129,4 +129,13 @@ public class FollowServiceImpl implements FollowService {
         resultList.setList(followList);
         return resultList;
     }
+
+    @Override
+    public ResultList findUserList(String findUserId) {
+        String userId = SecurityContextStore.getContext().getUserId();
+        List<Friends> followList = (List<Friends>) followMapper.findUserList(userId, findUserId);
+        ResultList resultList = new ResultList();
+        resultList.setList(followList);
+        return resultList;
+    }
 }

@@ -31,4 +31,6 @@ public interface FollowService {
 
     ResultList myFriendsList(String userId);
 
+    ResultList findUserList(String findUserId);
+
 }

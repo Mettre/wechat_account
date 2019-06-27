@@ -29,11 +29,13 @@ public interface FollowMapper {
 
     Follow findWhetherFollow(Follow record);
 
-    List<Follow> myFollowPageVo(Page<Follow> page, @Param(value = "userId")String userId);
+    List<Follow> myFollowPageVo(Page<Follow> page, @Param(value = "userId") String userId);
 
-    List<Follow> myFansPageVo(Page<Follow> page, @Param(value = "userId")String userId);
+    List<Follow> myFansPageVo(Page<Follow> page, @Param(value = "userId") String userId);
 
-    List<Follow> myFriendsPageVo(Page<Follow> page, @Param(value = "userId")String userId);
+    List<Follow> myFriendsPageVo(Page<Follow> page, @Param(value = "userId") String userId);
 
-    List<Friends> myFriendsList(@Param(value = "userId")String userId);
+    List<Friends> myFriendsList(@Param(value = "userId") String userId);
+
+    List<Friends> findUserList(@Param(value = "userId") String userId, @Param(value = "findUserId") String findUserId);
 }
