@@ -267,4 +267,20 @@
         order by wc_follow.update_time desc
     </select>
 
+    <!--搜索用户  模糊搜索-->
+    <select id="myFansPageVo" resultMap="BaseResultMap4">
+        select
+        <include refid="Base_Column_List5"></include>
+        from wc_user
+        left join (SELECT * FROM wc_follow where wc_follow.user_id = #{userId,jdbcType=VARCHAR} and
+        wc_follow.followed_user = wc_user.user_id and
+        wc_follow2.status = true) as wc_follow
+        on wc_user.user_id = wc_follow.user_id
+        left join (SELECT * FROM wc_follow where wc_follow.followed_user = #{userId,jdbcType=VARCHAR} and
+        wc_follow2.status = true) as wc_follow2
+        on wc_user.user_id = wc_follow2.user_id
+        where wc_user.user_id like "%"#{findUserId,jdbcType=VARCHAR}"%"
+        order by wc_user.creation_time desc
+    </select>
+
 </mapper>
