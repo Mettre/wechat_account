@@ -8,6 +8,7 @@ import com.mettre.account.enum_.ResultEnum;
 import com.mettre.account.exception.CustomerException;
 import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.mapper.FollowMapper;
+import com.mettre.account.pojo.FindUser;
 import com.mettre.account.pojo.Follow;
 import com.mettre.account.pojo.Friends;
 import com.mettre.account.pojoVM.FollowVM;
@@ -133,7 +134,7 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public ResultList findUserList(String findUserId) {
         String userId = SecurityContextStore.getContext().getUserId();
-        List<Friends> followList = (List<Friends>) followMapper.findUserList(userId, findUserId);
+        List<FindUser> followList = (List<FindUser>) followMapper.findUserList(userId, findUserId);
         ResultList resultList = new ResultList();
         resultList.setList(followList);
         return resultList;

@@ -70,7 +70,7 @@ public class FollowController {
         return new ResultUtil<>().setData(followService.myFansPageVo(page, userId));
     }
 
-    @RequestMapping(value = "/loginEd/findUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginEd/findUserList", method = RequestMethod.GET)
     @ApiOperation(value = "搜索用户")
     public Result<Object> findUserList(@RequestParam String findUserId) {
         return new ResultUtil<>().setData(followService.findUserList(findUserId));

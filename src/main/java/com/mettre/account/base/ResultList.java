@@ -1,12 +1,10 @@
 package com.mettre.account.base;
-
-import com.mettre.account.pojo.Friends;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class ResultList {
+public class ResultList<T> {
 
-    private List<Friends> list;
+    private List<T> list;
 }

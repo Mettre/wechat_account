@@ -1,6 +1,7 @@
 package com.mettre.account.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mettre.account.pojo.FindUser;
 import com.mettre.account.pojo.Follow;
 import com.mettre.account.pojo.Friends;
 import org.apache.ibatis.annotations.Param;
@@ -37,5 +38,5 @@ public interface FollowMapper {
 
     List<Friends> myFriendsList(@Param(value = "userId") String userId);
 
-    List<Friends> findUserList(@Param(value = "userId") String userId, @Param(value = "findUserId") String findUserId);
+    List<FindUser> findUserList(@Param(value = "userId") String userId, @Param(value = "findUserId") String findUserId);
 }
