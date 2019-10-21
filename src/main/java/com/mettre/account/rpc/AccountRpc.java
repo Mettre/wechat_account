@@ -2,10 +2,8 @@ package com.mettre.account.rpc;
 
 import com.mettre.account.base.Result;
 import com.mettre.account.base.ResultUtil;
-import com.mettre.account.jwt.SecurityContextStore;
 import com.mettre.account.pojo.Visitor;
 import com.mettre.account.pojoVM.VisitorRpcVM;
-import com.mettre.account.pojoVM.VisitorVM;
 import com.mettre.account.service.VisitorService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
