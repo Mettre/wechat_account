@@ -159,7 +159,7 @@
         <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20160810</version>
+        <version>20230227</version>
     </dependency>
 
         <!--&lt;!&ndash;权限 密码加密&ndash;&gt;-->
